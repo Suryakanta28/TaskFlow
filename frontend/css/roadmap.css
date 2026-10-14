@@ -1,0 +1,731 @@
+/* ==========================================================================
+   TASKFLOW - STUDY PATH & ROADMAP DESIGN SYSTEM (study-path.html)
+   Clean, Compact, Structured Visual Curriculum & Shortcut Milestone Flow
+   ========================================================================== */
+
+/* Main Hero Card */
+.roadmap-hero-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-xl, 18px);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.roadmap-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.roadmap-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-primary-light, #eef2ff);
+  border: 1px solid #c7d2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.12);
+}
+
+.roadmap-title-row h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.01em;
+}
+
+.roadmap-title-row p {
+  color: var(--text-secondary, #64748b);
+  font-size: 0.875rem;
+  max-width: 650px;
+  line-height: 1.4;
+}
+
+/* Progress & KPI Metrics */
+.roadmap-progress-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.roadmap-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+}
+
+.roadmap-progress-header strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-primary, #4f46e5);
+}
+
+.roadmap-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.85rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border-color, #e2e8f0);
+}
+
+@media (max-width: 768px) {
+  .roadmap-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .roadmap-hero-top {
+    flex-direction: column;
+  }
+}
+
+.roadmap-kpi-box {
+  background: var(--bg-tertiary, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-md, 10px);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.roadmap-kpi-box:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.roadmap-kpi-icon {
+  font-size: 1.35rem;
+}
+
+.roadmap-kpi-label {
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted, #94a3b8);
+  font-weight: 700;
+  display: block;
+}
+
+.roadmap-kpi-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary, #0f172a);
+}
+
+/* ==========================================================================
+   ROADMAP SHORTCUT MILESTONE FLOW (Structured Visual Flow Strip)
+   ========================================================================== */
+.roadmap-shortcut-panel {
+  background: #ffffff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-lg, 14px);
+  padding: 1.15rem 1.4rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.shortcut-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.shortcut-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shortcut-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted, #94a3b8);
+  font-weight: 500;
+}
+
+.roadmap-flow-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding: 0.35rem 0.2rem 0.65rem 0.2rem;
+  scrollbar-width: thin;
+}
+
+.flow-milestone-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.flow-milestone-node:hover {
+  border-color: var(--accent-primary, #4f46e5);
+  background: var(--accent-primary-light, #eef2ff);
+  color: var(--accent-primary, #4f46e5);
+  transform: translateY(-1px);
+}
+
+.flow-milestone-node.is-completed {
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.flow-milestone-node.is-current {
+  border-color: var(--accent-primary, #4f46e5);
+  background: var(--accent-primary-light, #eef2ff);
+  color: var(--accent-primary, #4f46e5);
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.flow-badge-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.flow-milestone-node.is-completed .flow-badge-num {
+  background: #059669;
+  color: #ffffff;
+}
+
+.flow-milestone-node.is-current .flow-badge-num {
+  background: var(--accent-primary, #4f46e5);
+  color: #ffffff;
+}
+
+.flow-arrow-separator {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   TOOLBAR & FILTER CONTROLS (Search, Status Filter, Actions)
+   ========================================================================== */
+.roadmap-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.roadmap-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.roadmap-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.roadmap-search-box input {
+  padding: 0.5rem 0.85rem 0.5rem 2.25rem;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: #ffffff;
+  font-size: 0.85rem;
+  width: 220px;
+  transition: all 0.2s ease;
+}
+
+.roadmap-search-box input:focus {
+  border-color: var(--accent-primary, #4f46e5);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+  width: 260px;
+}
+
+.roadmap-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-muted, #94a3b8);
+  pointer-events: none;
+}
+
+.filter-pill-btn {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: #ffffff;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-pill-btn:hover {
+  background: var(--bg-tertiary, #f8fafc);
+  border-color: #cbd5e1;
+}
+
+.filter-pill-btn.active {
+  background: var(--accent-primary, #4f46e5);
+  border-color: var(--accent-primary, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+}
+
+.roadmap-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   STRUCTURED PHASE ACCORDION CARDS
+   ========================================================================== */
+.roadmap-phases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.phase-card {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-lg, 14px);
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.phase-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05);
+}
+
+.phase-card.is-phase-completed {
+  border-color: #a7f3d0;
+  background: #ffffff;
+}
+
+/* Phase Header */
+.phase-card-header {
+  padding: 1.15rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  background: #ffffff;
+  transition: background 0.15s ease;
+}
+
+.phase-card-header:hover {
+  background: #fafbfc;
+}
+
+.phase-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.phase-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  background: var(--accent-primary-light, #eef2ff);
+  color: var(--accent-primary, #4f46e5);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.phase-card.is-phase-completed .phase-badge {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.phase-title-wrap {
+  flex: 1;
+}
+
+.phase-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.01em;
+}
+
+.phase-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.35;
+}
+
+/* Phase Header Right (Progress & Chevron) */
+.phase-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.phase-progress-widget {
+  text-align: right;
+  min-width: 140px;
+}
+
+.phase-progress-text {
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: var(--text-secondary, #475569);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.phase-progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.phase-progress-bar-fill {
+  height: 100%;
+  background: var(--accent-primary, #4f46e5);
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.phase-card.is-phase-completed .phase-progress-bar-fill {
+  background: #059669;
+}
+
+.phase-chevron {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-tertiary, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #64748b);
+  transition: transform 0.25s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.phase-chevron.open {
+  transform: rotate(180deg);
+  background: #ede9fe;
+  color: var(--accent-primary, #4f46e5);
+}
+
+/* Phase Body & Topics List */
+.phase-body {
+  display: none;
+  border-top: 1px solid var(--border-color, #e2e8f0);
+}
+
+.phase-body.open {
+  display: block;
+  animation: slideFadeDown 0.25s ease-out;
+}
+
+@keyframes slideFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.topics-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   STRUCTURED SHORTCUT TOPIC ROW
+   ========================================================================== */
+.topic-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.4rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.topic-row:last-child {
+  border-bottom: none;
+}
+
+.topic-row:hover {
+  background: #f8fafc;
+}
+
+.topic-row.is-done {
+  background: rgba(240, 253, 244, 0.5);
+}
+
+.topic-row.is-in-progress {
+  border-left: 3.5px solid var(--accent-primary, #4f46e5);
+  background: rgba(245, 243, 255, 0.4);
+}
+
+/* Topic Left: Custom Checkbox + Title + Badges */
+.topic-row-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex: 1;
+}
+
+/* Custom Checkbox Button */
+.topic-check-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.topic-check-btn:hover {
+  border-color: var(--accent-primary, #4f46e5);
+  transform: scale(1.08);
+}
+
+.topic-row.is-done .topic-check-btn {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(5, 150, 105, 0.25);
+}
+
+.topic-details {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.topic-name {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+  transition: color 0.15s ease;
+}
+
+.topic-name.strike {
+  text-decoration: line-through;
+  color: var(--text-muted, #94a3b8);
+}
+
+.subject-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+
+/* Status Badges */
+.topic-status-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.status-badge-done {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.status-badge-progress {
+  background: #ede9fe;
+  color: #7c3aed;
+  animation: pulseLight 2s infinite ease-in-out;
+}
+
+@keyframes pulseLight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Topic Right: Duration, Notes Shortcut, Done Action */
+.topic-row-right {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.topic-duration {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  background: #f8fafc;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.topic-link-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-primary, #4f46e5);
+  background: var(--accent-primary-light, #eef2ff);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.topic-link-btn:hover {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.topic-action-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.topic-action-btn.btn-done {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.topic-action-btn.btn-done:hover {
+  background: #ecfdf5;
+  border-color: #059669;
+  color: #059669;
+}
+
+.topic-action-btn.btn-reopen {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+.topic-action-btn.btn-reopen:hover {
+  background: #f8fafc;
+  color: var(--accent-primary, #4f46e5);
+  border-color: var(--accent-primary, #4f46e5);
+}
+
+.topic-action-btn.btn-plan {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #6d28d9;
+}
+
+.topic-action-btn.btn-plan:hover {
+  background: #6d28d9;
+  border-color: #6d28d9;
+  color: #ffffff;
+}
+
+.topic-action-btn.btn-edit {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.topic-action-btn.btn-edit:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+@media (max-width: 640px) {
+  .topic-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+  .topic-row-right {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0.4rem;
+    border-top: 1px dashed #f1f5f9;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "task-manager-fullstack",
+  "version": "1.0.0",
+  "description": "Full-Stack Task Manager with Python FastAPI, SQLite, and Vanilla JS",
+  "main": "frontend/index.html",
+  "scripts": {
+    "start": "python -m uvicorn backend.main:app --reload --port 8000",
+    "dev": "python -m uvicorn backend.main:app --reload --port 8000",
+    "test": "python -m backend.test_backend",
+    "install:backend": "pip install -r backend/requirements.txt"
+  },
+  "keywords": [
+    "task-manager",
+    "fastapi",
+    "sqlite",
+    "jwt",
+    "portfolio"
+  ],
+  "author": "B.Tech CSE Fresher",
+  "license": "MIT"
+}

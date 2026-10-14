@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Tasks — TaskFlow</title>
+  <meta name="description" content="View, search, filter, and organize all your study preparation tasks with priority tracking and due dates.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
+      </div>
+
+      <nav class="sidebar-menu" aria-label="Main Navigation">
+        <div class="menu-label">Main Navigation</div>
+        
+        <a href="dashboard.html" class="nav-item" id="sidebar-nav-dashboard" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="study-path.html" class="nav-item" id="sidebar-nav-studypath" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>🗺️</span>
+            <span>My Study Path</span>
+          </div>
+        </a>
+
+        <a href="study-plan.html" class="nav-item" id="sidebar-nav-studyplan" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📅</span>
+            <span>My Study Plan</span>
+          </div>
+        </a>
+
+        <a href="tasks.html" class="nav-item active" id="sidebar-nav-tasks" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📋</span>
+            <span>My Tasks</span>
+          </div>
+          <span class="nav-badge" id="sidebar-task-count">0</span>
+        </a>
+
+        <a href="analytics.html" class="nav-item" id="sidebar-nav-analytics" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📈</span>
+            <span>Progress & Analytics</span>
+          </div>
+        </a>
+
+        <a href="profile.html" class="nav-item" id="sidebar-nav-profile" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>👤</span>
+            <span>My Profile</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-chip" style="text-decoration: none;">
+          <div class="user-avatar">👨‍💻</div>
+          <div class="user-info">
+            <div class="user-name">Loading...</div>
+            <div class="user-email">user@example.com</div>
+          </div>
+        </a>
+
+        <div style="margin-top: 0.75rem;">
+          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="width: 100%; justify-content: center;" id="logout-btn">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Navigation Menu">
+            ☰
+          </button>
+          <div class="greeting-text">
+            <h2>My Tasks & Study Items</h2>
+            <p>Search, filter, organize, and track your study preparation tasks</p>
+          </div>
+        </div>
+
+        <div class="nav-right">
+          <button class="btn btn-primary" onclick="openAddTaskModal()" id="create-task-btn">
+            <span>+</span>
+            <span>Add Task</span>
+          </button>
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">
+            ← Dashboard
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Tasks Content -->
+      <main class="dashboard-content" style="max-width: 1140px; margin: 0 auto; width: 100%;">
+        
+        <!-- Filter & Search Toolbar Card -->
+        <div class="settings-card" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
+            
+            <!-- Search Bar -->
+            <div style="position: relative; flex: 1; min-width: 240px;">
+              <input 
+                type="text" 
+                id="tasks-search-input" 
+                class="form-control" 
+                placeholder="Search by task title, description, or subject..." 
+                style="padding-left: 2.25rem;"
+              >
+              <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);">🔍</span>
+            </div>
+
+            <!-- Filters -->
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+              
+              <!-- Status Filter -->
+              <select id="filter-status" class="form-control custom-select no-icon" style="width: auto; min-width: 130px;">
+                <option value="all">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+
+              <!-- Priority Filter -->
+              <select id="filter-priority" class="form-control custom-select no-icon" style="width: auto; min-width: 130px;">
+                <option value="all">All Priorities</option>
+                <option value="High">🔴 High</option>
+                <option value="Medium">🟡 Medium</option>
+                <option value="Low">🟢 Low</option>
+              </select>
+
+              <!-- Sort By -->
+              <select id="sort-by" class="form-control custom-select no-icon" style="width: auto; min-width: 140px;">
+                <option value="due_date">Due Date</option>
+                <option value="priority">Priority</option>
+                <option value="created_at" selected>Created Date</option>
+                <option value="title">Title (A-Z)</option>
+              </select>
+
+              <!-- View Mode Toggles -->
+              <div style="display: flex; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden;">
+                <button type="button" class="btn btn-secondary btn-sm active" id="view-grid-btn" style="border-radius: 0; border: none; padding: 0.4rem 0.75rem;" title="Grid View">
+                  🗂️ Grid
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" id="view-table-btn" style="border-radius: 0; border: none; padding: 0.4rem 0.75rem;" title="Table View">
+                  📋 Table
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Task Count Summary Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <div style="font-size: 0.9rem; color: var(--text-secondary);" id="tasks-count-label">
+            Showing all tasks
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span class="badge badge-completed" id="summary-completed-count">0 Completed</span>
+            <span class="badge badge-pending" id="summary-pending-count">0 Pending</span>
+          </div>
+        </div>
+
+        <!-- Tasks Container (Grid / Table) -->
+        <div id="tasks-list-container">
+          <!-- Dynamically populated by tasks.js -->
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div class="modal-backdrop" id="add-task-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="add-modal-title">
+      <div class="modal-header">
+        <h3 id="add-modal-title">Create New Study Task</h3>
+        <button class="modal-close" onclick="closeModal('add-task-modal')">✕</button>
+      </div>
+      <form id="add-task-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="task-title" class="form-label">Task Title *</label>
+            <input type="text" id="task-title" class="form-control no-icon" placeholder="e.g. Master Flexbox Layouts / Quantitative Arithmetic Practice" required maxlength="200">
+          </div>
+
+          <div class="form-group">
+            <label for="task-desc" class="form-label">Description / Notes</label>
+            <textarea id="task-desc" class="form-control no-icon" rows="3" placeholder="Provide notes, problem sets, or revision checklist..."></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="task-category" class="form-label">Subject / Module *</label>
+              <input type="text" id="task-category" class="form-control no-icon" placeholder="e.g. Frontend / Physics / Aptitude" required>
+            </div>
+
+            <div class="form-group">
+              <label for="task-priority" class="form-label">Priority</label>
+              <select id="task-priority" class="form-control no-icon custom-select">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="task-due-date" class="form-label">Due Date</label>
+              <input type="date" id="task-due-date" class="form-control no-icon">
+            </div>
+
+            <div class="form-group">
+              <label for="task-planned-date" class="form-label">Planned Study Date</label>
+              <input type="date" id="task-planned-date" class="form-control no-icon">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="task-est-minutes" class="form-label">Estimated Duration (Minutes)</label>
+              <input type="number" id="task-est-minutes" class="form-control no-icon" value="60" min="15" max="600">
+            </div>
+
+            <div class="form-group">
+              <label for="task-status" class="form-label">Status</label>
+              <select id="task-status" class="form-control no-icon custom-select">
+                <option value="Pending" selected>Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('add-task-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="save-task-btn">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Task Modal -->
+  <div class="modal-backdrop" id="edit-task-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="edit-modal-title">
+      <div class="modal-header">
+        <h3 id="edit-modal-title">Edit Study Task</h3>
+        <button class="modal-close" onclick="closeModal('edit-task-modal')">✕</button>
+      </div>
+      <form id="edit-task-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-task-title" class="form-label">Task Title *</label>
+            <input type="text" id="edit-task-title" class="form-control no-icon" required maxlength="200">
+          </div>
+
+          <div class="form-group">
+            <label for="edit-task-desc" class="form-label">Description / Notes</label>
+            <textarea id="edit-task-desc" class="form-control no-icon" rows="3"></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="edit-task-category" class="form-label">Subject / Module *</label>
+              <input type="text" id="edit-task-category" class="form-control no-icon" required>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-task-priority" class="form-label">Priority</label>
+              <select id="edit-task-priority" class="form-control no-icon custom-select">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="edit-task-due-date" class="form-label">Due Date</label>
+              <input type="date" id="edit-task-due-date" class="form-control no-icon">
+            </div>
+
+            <div class="form-group">
+              <label for="edit-task-planned-date" class="form-label">Planned Study Date</label>
+              <input type="date" id="edit-task-planned-date" class="form-control no-icon">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="edit-task-est-minutes" class="form-label">Estimated Duration (Minutes)</label>
+              <input type="number" id="edit-task-est-minutes" class="form-control no-icon" min="15" max="600">
+            </div>
+
+            <div class="form-group">
+              <label for="edit-task-status" class="form-label">Status</label>
+              <select id="edit-task-status" class="form-control no-icon custom-select">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('edit-task-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" id="delete-modal">
+    <div class="modal-box" style="max-width: 440px;" role="dialog">
+      <div class="modal-header">
+        <h3 style="color: #e11d48;">Delete Task</h3>
+        <button class="modal-close" onclick="closeModal('delete-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+          Are you sure you want to permanently delete <strong id="delete-task-title">this task</strong>?
+        </p>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('delete-modal')">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/tasks.js"></script>
+</body>
+</html>

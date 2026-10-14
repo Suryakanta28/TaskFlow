@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow — Smart Daily Task & Productivity Management</title>
+  <meta name="description" content="Organize your daily tasks, set priorities, track project deadlines, and boost your everyday productivity with TaskFlow.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Landing Header (Sticky Navbar) -->
+  <header class="landing-header">
+    <nav class="landing-nav" aria-label="Main Navigation">
+      <a href="index.html" class="brand-logo" style="text-decoration: none;">
+        <div class="brand-icon">⚡</div>
+        <span>Task<span class="gradient-text">Flow</span></span>
+      </a>
+
+      <!-- Center Nav Links -->
+      <ul class="landing-nav-links">
+        <li>
+          <a href="#hero" class="landing-nav-link active" id="nav-link-hero">Home</a>
+        </li>
+        <li>
+          <a href="#features" class="landing-nav-link" id="nav-link-features">Features</a>
+        </li>
+        <li>
+          <a href="#how-it-works" class="landing-nav-link" id="nav-link-how">How It Works</a>
+        </li>
+      </ul>
+
+      <!-- Right Nav Actions -->
+      <div class="landing-nav-actions" id="landing-auth-actions">
+        <a href="login.html" class="btn btn-secondary btn-sm" id="landing-login-btn">Sign In</a>
+        <a href="register.html" class="btn btn-primary btn-sm" id="landing-register-btn">Get Started</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section" id="hero">
+      
+      <h1 class="hero-title">
+        Manage Your Daily Tasks with <span class="gradient-text">Speed, Focus</span> & Clarity.
+      </h1>
+      
+      <p class="hero-subtitle">
+        The intuitive personal task management platform designed to help you organize projects, prioritize urgent goals, track deadlines, and accomplish more every day.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="register.html" class="btn btn-primary" style="padding: 0.9rem 2.2rem; font-size: 1.05rem;" id="hero-get-started-cta">
+          Get Started Free →
+        </a>
+        <a href="login.html" class="btn btn-secondary" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;" id="hero-sign-in-cta">
+          Sign In to Dashboard
+        </a>
+      </div>
+
+      <!-- Preview Mockup Card -->
+      <div class="hero-preview-wrapper">
+        <div class="hero-preview">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+              <span style="margin-left: 0.5rem; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TaskFlow Live Workspace — Today's Priorities</span>
+            </div>
+            <span class="badge badge-completed"><span class="badge-dot"></span> 100% Synced</span>
+          </div>
+
+          <!-- Mini Quick Stats -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+            <div style="background: var(--bg-tertiary); padding: 0.85rem 1rem; border-radius: var(--radius-md);">
+              <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Total Tasks</span>
+              <h3 style="font-size: 1.35rem; margin-top: 0.2rem; color: var(--text-primary);">14</h3>
+            </div>
+            <div style="background: var(--bg-tertiary); padding: 0.85rem 1rem; border-radius: var(--radius-md);">
+              <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Pending</span>
+              <h3 style="font-size: 1.35rem; margin-top: 0.2rem; color: var(--color-pending);">4</h3>
+            </div>
+            <div style="background: var(--bg-tertiary); padding: 0.85rem 1rem; border-radius: var(--radius-md);">
+              <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">In Progress</span>
+              <h3 style="font-size: 1.35rem; margin-top: 0.2rem; color: var(--color-in-progress);">3</h3>
+            </div>
+            <div style="background: var(--bg-tertiary); padding: 0.85rem 1rem; border-radius: var(--radius-md);">
+              <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Completed</span>
+              <h3 style="font-size: 1.35rem; margin-top: 0.2rem; color: var(--color-completed);">7</h3>
+            </div>
+          </div>
+
+          <!-- Realistic Mockup Tasks -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 1.1rem;">🚀</span>
+                <div>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem;">Finalize Project Presentation & Slides</strong>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.1rem;">Prepare summary slides and architecture diagram for client review.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0;">
+                <span class="badge badge-high">High Priority</span>
+                <span class="badge badge-in-progress">In Progress</span>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 1.1rem;">⏳</span>
+                <div>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem;">Review Weekly Team Sprint Backlog</strong>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.1rem;">Organize pending action items and set milestone deadlines.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0;">
+                <span class="badge badge-medium">Medium</span>
+                <span class="badge badge-pending">Pending</span>
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 1.1rem;">✅</span>
+                <div>
+                  <strong style="text-decoration: line-through; color: var(--text-muted); font-size: 0.95rem;">Submit Semester Project Documentation</strong>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem;">Completed and archived successfully.</p>
+                </div>
+              </div>
+              <span class="badge badge-completed">Completed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- User-Friendly Features Section -->
+    <section class="features-section" id="features">
+      <div class="section-header">
+        <h2>Features Built for Your Daily Workflow</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+          Everything you need to capture ideas, organize priorities, and complete tasks faster without complications.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">📋</div>
+          <h3>Smart Task Organization</h3>
+          <p>Quickly create, update, and categorize tasks with clear titles, detailed notes, and custom deadline dates in just a few clicks.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🔍</div>
+          <h3>Instant Search & Live Filters</h3>
+          <p>Find any task in seconds with real-time keyword search, or filter dynamically by Pending, In Progress, and Completed states.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🔥</div>
+          <h3>Smart Priority Focus</h3>
+          <p>Highlight urgent work with High, Medium, and Low priority badges so you always know exactly what needs your attention first.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">📊</div>
+          <h3>Live Productivity Analytics</h3>
+          <p>Visual statistics cards automatically track your total tasks, pending workload, and finished milestones in real time.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🗂️</div>
+          <h3>Flexible Grid & Table Views</h3>
+          <p>Switch seamlessly between visual interactive task cards and structured spreadsheet-style table layouts whenever you want.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">⏰</div>
+          <h3>Deadlines & Due Date Alerts</h3>
+          <p>Stay on top of schedules with formatted due date tags and clear visual alerts for overdue or approaching deadlines.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">⚡</div>
+          <h3>One-Click Quick Actions</h3>
+          <p>Mark tasks complete with a single click, reopen finished items, or edit deadlines without frustrating page reloads.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🛡️</div>
+          <h3>Private & Secure Workspace</h3>
+          <p>Your tasks are protected with individual password-secured accounts, ensuring your personal to-dos stay 100% private.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visual Workflow Flow Section -->
+    <section class="flow-workflow-section" id="how-it-works">
+      <div class="section-header">
+        <h2>How It Works — Step-by-Step Flow</h2>
+        <p style="color: var(--text-secondary); max-width: 620px; margin: 0 auto;">
+          Experience effortless productivity with our streamlined 3-step workflow designed for speed, clarity, and focus.
+        </p>
+      </div>
+
+      <div class="flow-container">
+        <div class="flow-grid">
+          <!-- Step 1 Card -->
+          <div class="flow-card">
+            <div class="flow-header">
+              <div class="flow-step-num">01</div>
+              <div class="flow-icon-circle">👤</div>
+            </div>
+            <div class="flow-content">
+              <div class="flow-step-pill">Step 1 • Instant Setup</div>
+              <h3>Create Your Free Account</h3>
+              <p>Sign up in seconds with your email to get instant access to your private, personalized productivity workspace.</p>
+            </div>
+            <div class="flow-footer-chip">
+              <span>⚡ 10-Second Quick Onboarding</span>
+            </div>
+          </div>
+
+          <!-- Flow Arrow 1 -->
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+
+          <!-- Step 2 Card -->
+          <div class="flow-card active-flow-card">
+            <div class="flow-header">
+              <div class="flow-step-num">02</div>
+              <div class="flow-icon-circle">✍️</div>
+            </div>
+            <div class="flow-content">
+              <div class="flow-step-pill" style="background: rgba(79, 70, 229, 0.12); color: var(--accent-primary);">Step 2 • Organize</div>
+              <h3>Add & Prioritize Tasks</h3>
+              <p>Create tasks with descriptions, set deadline dates, and assign High, Medium, or Low priority tags.</p>
+            </div>
+            <div class="flow-footer-chip">
+              <span>🎯 Smart Priority Tags & Deadlines</span>
+            </div>
+          </div>
+
+          <!-- Flow Arrow 2 -->
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+
+          <!-- Step 3 Card -->
+          <div class="flow-card">
+            <div class="flow-header">
+              <div class="flow-step-num">03</div>
+              <div class="flow-icon-circle">🏆</div>
+            </div>
+            <div class="flow-content">
+              <div class="flow-step-pill" style="background: rgba(5, 150, 105, 0.12); color: var(--color-completed);">Step 3 • Track & Win</div>
+              <h3>Track, Check Off & Succeed</h3>
+              <p>Filter your views, monitor live analytics, and check off completed tasks as you achieve your daily milestones.</p>
+            </div>
+            <div class="flow-footer-chip">
+              <span>📊 Real-Time Analytics & Completion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study & Career Tracks Section -->
+    <section class="features-section" id="tracks" style="padding-top: 1rem;">
+      <div class="section-header">
+        <h2>Supported Study & Career Tracks</h2>
+        <p style="color: var(--text-secondary); max-width: 640px; margin: 0 auto;">
+          Choose your field of study or competitive exam preparation to get a specialized dashboard, syllabus starter roadmap, and private task tracking.
+        </p>
+      </div>
+
+      <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="feature-card" style="border-top: 3px solid #4f46e5;">
+          <div class="feature-icon-box" style="background: #eef2ff; color: #4f46e5;">💻</div>
+          <h3>Full Stack Development</h3>
+          <p>Frontend, Backend, REST APIs, Databases, Git, and end-to-end full stack software engineering roadmap.</p>
+          <a href="register.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; justify-content: center;">Start Track →</a>
+        </div>
+
+        <div class="feature-card" style="border-top: 3px solid #0284c7;">
+          <div class="feature-icon-box" style="background: #f0f9ff; color: #0284c7;">🏛️</div>
+          <h3>SSC (CGL, CHSL, MTS)</h3>
+          <p>Quantitative Aptitude, Logical Reasoning, English Comprehension, General Awareness, and full-length mock tests.</p>
+          <a href="register.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; justify-content: center;">Start Track →</a>
+        </div>
+
+        <div class="feature-card" style="border-top: 3px solid #d97706;">
+          <div class="feature-icon-box" style="background: #fffbeb; color: #d97706;">🚆</div>
+          <h3>Railway (RRB NTPC / Group D)</h3>
+          <p>General Science, Railway Math, Logical Intelligence, Railway GK, and previous year exam simulations.</p>
+          <a href="register.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; justify-content: center;">Start Track →</a>
+        </div>
+
+        <div class="feature-card" style="border-top: 3px solid #7c3aed;">
+          <div class="feature-icon-box" style="background: #f5f3ff; color: #7c3aed;">📐</div>
+          <h3>JEE (Main & Advanced)</h3>
+          <p>Physics Mechanics, Chemistry Thermodynamics, Calculus, Coordinate Geometry, and 3-hour CBT mock series.</p>
+          <a href="register.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; justify-content: center;">Start Track →</a>
+        </div>
+
+        <div class="feature-card" style="border-top: 3px solid #059669;">
+          <div class="feature-icon-box" style="background: #ecfdf5; color: #059669;">🩺</div>
+          <h3>NEET (Medical Entrance)</h3>
+          <p>Human Physiology, Organic Reaction Mechanisms, Botany Genetics, Plant Kingdom, and 720-mark mock papers.</p>
+          <a href="register.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; justify-content: center;">Start Track →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <section style="max-width: 1200px; margin: 2rem auto 5rem auto; padding: 0 2rem;">
+      <div style="background: var(--accent-gradient); border-radius: var(--radius-xl); padding: 3.5rem 2rem; text-align: center; color: #ffffff; box-shadow: 0 15px 30px rgba(79, 70, 229, 0.25);">
+        <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff;">Ready to Organize Your Life & Work?</h2>
+        <p style="font-size: 1.1rem; opacity: 0.92; max-width: 600px; margin: 0 auto 2rem auto;">
+          Join TaskFlow today and experience a clean, distraction-free way to manage tasks and achieve your goals.
+        </p>
+        <a href="register.html" class="btn btn-secondary" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 700; color: var(--accent-primary); background: #ffffff; border: none; box-shadow: var(--shadow-lg);">
+          Get Started Free Today →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid var(--border-color); padding: 2.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span style="font-weight: 700; color: var(--text-primary); font-size: 1.1rem;">Task<span class="gradient-text">Flow</span></span>
+    </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/guide.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already authenticated, show direct Dashboard button in nav
+      if (Auth.isAuthenticated()) {
+        const user = Auth.getUser();
+        const actionsContainer = document.getElementById('landing-auth-actions');
+        if (actionsContainer) {
+          actionsContainer.innerHTML = `
+            <a href="dashboard.html" class="btn btn-primary btn-sm" id="landing-dashboard-btn">
+              ⚡ Open Dashboard →
+            </a>
+          `;
+        }
+
+        const heroCtaGroup = document.querySelector('.hero-cta-group');
+        if (heroCtaGroup) {
+          heroCtaGroup.innerHTML = `
+            <a href="dashboard.html" class="btn btn-primary" style="padding: 0.9rem 2.2rem; font-size: 1.05rem;" id="hero-dashboard-cta">
+              Go to Your Dashboard (${user?.name?.split(' ')[0] || 'User'}) →
+            </a>
+          `;
+        }
+      }
+
+      // Dynamic ScrollSpy for Landing Page
+      initLandingScrollSpy();
+    });
+
+    function initLandingScrollSpy() {
+      const navLinks = [
+        { id: 'hero', link: document.getElementById('nav-link-hero') },
+        { id: 'features', link: document.getElementById('nav-link-features') },
+        { id: 'how-it-works', link: document.getElementById('nav-link-how') }
+      ];
+
+      const header = document.querySelector('.landing-header');
+
+      function updateActiveNav() {
+        const scrollPos = window.scrollY + 160;
+        const isBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 60);
+
+        let activeId = 'hero';
+        if (isBottom) {
+          activeId = 'how-it-works';
+        } else {
+          navLinks.forEach(item => {
+            const section = document.getElementById(item.id);
+            if (section && scrollPos >= section.offsetTop) {
+              activeId = item.id;
+            }
+          });
+        }
+
+        navLinks.forEach(item => {
+          if (item.link) {
+            if (item.id === activeId) {
+              item.link.classList.add('active');
+            } else {
+              item.link.classList.remove('active');
+            }
+          }
+        });
+
+        // Sticky header elevation effect
+        if (header) {
+          if (window.scrollY > 15) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+        }
+      }
+
+      // Smooth click scrolling with navbar offset
+      navLinks.forEach(item => {
+        if (item.link) {
+          item.link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = document.getElementById(item.id);
+            if (section) {
+              const yOffset = -80;
+              const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+          });
+        }
+      });
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      updateActiveNav();
+    }
+  </script>
+</body>
+</html>

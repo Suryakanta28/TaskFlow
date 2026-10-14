@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalize Your Study Journey — TaskFlow</title>
+  <meta name="description" content="Set up your personalized study path, daily targets, and syllabus focus in 1 minute.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/onboarding.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="onboard-page">
+
+  <div class="onboard-bg-glow"></div>
+
+  <div class="onboard-card">
+    
+    <!-- Top Header Bar -->
+    <div class="onboard-top-bar">
+      <div class="onboard-brand">
+        <div class="onboard-brand-icon">⚡</div>
+        <span>Task<span class="gradient-text">Flow</span></span>
+      </div>
+      <button type="button" class="onboard-skip-link" onclick="skipOnboarding()" title="Skip onboarding and configure later in profile">
+        Skip setup for now ✕
+      </button>
+    </div>
+
+    <!-- Stepper Navigation Header -->
+    <div class="onboard-stepper-header">
+      <div class="onboard-stepper-nav">
+        <button type="button" class="onboard-step-pill active" id="step-nav-1" onclick="goToStep(1)">
+          <div class="onboard-step-num">1</div>
+          <div class="onboard-step-info">
+            <span class="onboard-step-info-label">Step 1</span>
+            <span class="onboard-step-info-title">Study Track</span>
+          </div>
+        </button>
+
+        <button type="button" class="onboard-step-pill" id="step-nav-2" onclick="goToStep(2)">
+          <div class="onboard-step-num">2</div>
+          <div class="onboard-step-info">
+            <span class="onboard-step-info-label">Step 2</span>
+            <span class="onboard-step-info-title">Routine & Pace</span>
+          </div>
+        </button>
+
+        <button type="button" class="onboard-step-pill" id="step-nav-3" onclick="goToStep(3)">
+          <div class="onboard-step-num">3</div>
+          <div class="onboard-step-info">
+            <span class="onboard-step-info-label">Step 3</span>
+            <span class="onboard-step-info-title">Goals & Focus</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Animated Progress Bar -->
+      <div class="onboard-progress-track">
+        <div id="onboard-progress-fill" class="onboard-progress-fill" style="width: 33.33%;"></div>
+      </div>
+    </div>
+
+    <!-- Main Onboarding Form -->
+    <form id="onboarding-form">
+
+      <!-- ==========================================
+           STEP 1: Primary Study Track Selection
+           ========================================== -->
+      <div class="step-pane active" id="step-1-pane">
+        <div class="step-heading">
+          <h2>Choose Your Primary Study Track</h2>
+          <p>Select your target exam or career track. We will generate your syllabus roadmap, daily tasks, and study schedule based on this.</p>
+        </div>
+
+        <div class="track-select-grid" id="track-select-cards">
+          
+          <!-- Track 1: Full Stack -->
+          <label class="track-card-option">
+            <input type="radio" name="study_path" value="FULL_STACK" checked>
+            <div class="track-card-box">
+              <div class="track-card-header">
+                <div class="track-card-icon-wrap">💻</div>
+                <div class="track-check-circle">✓</div>
+              </div>
+              <div>
+                <span class="track-card-badge">Web & Software</span>
+                <div class="track-card-title">Full Stack Development</div>
+                <div class="track-card-desc">Frontend, Backend, REST APIs, SQL Databases & System Design</div>
+              </div>
+              <div class="track-card-meta">
+                <span>⚡ 7 Core Modules</span> • <span>Project-driven</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Track 2: SSC -->
+          <label class="track-card-option">
+            <input type="radio" name="study_path" value="SSC">
+            <div class="track-card-box">
+              <div class="track-card-header">
+                <div class="track-card-icon-wrap">🏛️</div>
+                <div class="track-check-circle">✓</div>
+              </div>
+              <div>
+                <span class="track-card-badge">CGL • CHSL • MTS</span>
+                <div class="track-card-title">SSC Preparation</div>
+                <div class="track-card-desc">Quantitative Aptitude, Logical Reasoning, English & General Awareness</div>
+              </div>
+              <div class="track-card-meta">
+                <span>📚 5 Core Modules</span> • <span>PYQs & Mocks</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Track 3: Railway -->
+          <label class="track-card-option">
+            <input type="radio" name="study_path" value="RAILWAY">
+            <div class="track-card-box">
+              <div class="track-card-header">
+                <div class="track-card-icon-wrap">🚆</div>
+                <div class="track-check-circle">✓</div>
+              </div>
+              <div>
+                <span class="track-card-badge">RRB NTPC • Group D</span>
+                <div class="track-card-title">Railway Exam Preparation</div>
+                <div class="track-card-desc">General Science, Railway Mathematics, Reasoning & GK / Current Affairs</div>
+              </div>
+              <div class="track-card-meta">
+                <span>🎯 5 Core Modules</span> • <span>CBT Focused</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Track 4: JEE -->
+          <label class="track-card-option">
+            <input type="radio" name="study_path" value="JEE">
+            <div class="track-card-box">
+              <div class="track-card-header">
+                <div class="track-card-icon-wrap">📐</div>
+                <div class="track-check-circle">✓</div>
+              </div>
+              <div>
+                <span class="track-card-badge">Main & Advanced</span>
+                <div class="track-card-title">JEE Engineering Prep</div>
+                <div class="track-card-desc">Engineering Physics, Organic/Inorganic Chemistry & Calculus Maths</div>
+              </div>
+              <div class="track-card-meta">
+                <span>🔬 5 Core Modules</span> • <span>High-Yield Problem Solving</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Track 5: NEET -->
+          <label class="track-card-option span-full">
+            <input type="radio" name="study_path" value="NEET">
+            <div class="track-card-box">
+              <div class="track-card-header">
+                <div class="track-card-icon-wrap">🩺</div>
+                <div class="track-check-circle">✓</div>
+              </div>
+              <div>
+                <span class="track-card-badge">Medical • NCERT</span>
+                <div class="track-card-title">NEET Medical Preparation</div>
+                <div class="track-card-desc">NCERT Biology (Zoology & Botany), Organic Reaction Mechanisms & Physics Mechanics/Optics</div>
+              </div>
+              <div class="track-card-meta">
+                <span>🧬 5 Core Modules</span> • <span>NCERT Line-by-Line Mastery</span>
+              </div>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- Actions for Step 1 -->
+        <div class="onboard-actions-row">
+          <button type="button" class="btn-back" onclick="skipOnboarding()">
+            Skip for Now
+          </button>
+          <button type="button" class="btn-next" onclick="goToStep(2)">
+            Continue to Schedule & Routine →
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ==========================================
+           STEP 2: Experience Level & Routine
+           ========================================== -->
+      <div class="step-pane" id="step-2-pane">
+        <div class="step-heading">
+          <h2>Your Experience & Daily Schedule</h2>
+          <p>Tell us your current baseline and how much time you can dedicate each day to calibrate realistic milestones.</p>
+        </div>
+
+        <!-- 1. Experience Level -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label class="routine-section-label">
+            <span>1. Current Skill / Preparation Level</span>
+          </label>
+          <div class="level-select-grid">
+            <label class="level-option">
+              <input type="radio" name="current_level" value="Beginner" checked>
+              <div class="level-box">
+                <span class="level-emoji">🌱</span>
+                <strong>Beginner</strong>
+                <small>Starting from zero / fundamentals. Need step-by-step guidance.</small>
+              </div>
+            </label>
+
+            <label class="level-option">
+              <input type="radio" name="current_level" value="Intermediate">
+              <div class="level-box">
+                <span class="level-emoji">🚀</span>
+                <strong>Intermediate</strong>
+                <small>Covered fundamentals. Ready for problem-solving & real projects.</small>
+              </div>
+            </label>
+
+            <label class="level-option">
+              <input type="radio" name="current_level" value="Advanced">
+              <div class="level-box">
+                <span class="level-emoji">⚡</span>
+                <strong>Advanced</strong>
+                <small>Revision phase. Speed drills, mock tests & advanced concepts.</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 2. Daily Study Commitment Presets -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label class="routine-section-label">
+            <span>2. Daily Study Target</span>
+            <span class="badge-hint">Recommended: 2 Hours/day</span>
+          </label>
+          
+          <div class="time-presets-grid" id="time-presets-row">
+            <div class="time-preset-btn" data-minutes="60" onclick="setDailyMinutes(60, this)">
+              <span class="preset-val">1 hr</span>
+              <span class="preset-sub">60 min / day</span>
+            </div>
+            <div class="time-preset-btn active" data-minutes="120" onclick="setDailyMinutes(120, this)">
+              <span class="preset-val">2 hrs</span>
+              <span class="preset-sub">⭐ Popular</span>
+            </div>
+            <div class="time-preset-btn" data-minutes="180" onclick="setDailyMinutes(180, this)">
+              <span class="preset-val">3 hrs</span>
+              <span class="preset-sub">180 min / day</span>
+            </div>
+            <div class="time-preset-btn" data-minutes="240" onclick="setDailyMinutes(240, this)">
+              <span class="preset-val">4 hrs</span>
+              <span class="preset-sub">Sprint Pace</span>
+            </div>
+            <div class="time-preset-btn" data-minutes="360" onclick="setDailyMinutes(360, this)">
+              <span class="preset-val">6+ hrs</span>
+              <span class="preset-sub">Full Time</span>
+            </div>
+          </div>
+
+          <!-- Hidden select for compatibility -->
+          <select id="daily-minutes" class="form-control" style="display: none;">
+            <option value="60">1 Hour / Day (60 min)</option>
+            <option value="120" selected>2 Hours / Day (120 min)</option>
+            <option value="180">3 Hours / Day (180 min)</option>
+            <option value="240">4 Hours / Day (240 min)</option>
+            <option value="360">6+ Hours / Day (360 min)</option>
+          </select>
+        </div>
+
+        <!-- 3. Study Days per Week Presets -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label class="routine-section-label">
+            <span>3. Study Days Per Week</span>
+            <span class="badge-hint">6 Days is optimal</span>
+          </label>
+          
+          <div class="days-presets-grid" id="days-presets-row">
+            <div class="day-preset-btn" data-days="5" onclick="setStudyDays(5, this)">
+              <div style="text-align: left;">
+                <div style="font-weight: 700;">5 Days / Week</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Mon – Fri • Weekends Off</div>
+              </div>
+              <span class="day-badge">Balanced</span>
+            </div>
+
+            <div class="day-preset-btn active" data-days="6" onclick="setStudyDays(6, this)">
+              <div style="text-align: left;">
+                <div style="font-weight: 700;">6 Days / Week</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Mon – Sat • 1 Rest Day</div>
+              </div>
+              <span class="day-badge">⭐ Recommended</span>
+            </div>
+
+            <div class="day-preset-btn" data-days="7" onclick="setStudyDays(7, this)">
+              <div style="text-align: left;">
+                <div style="font-weight: 700;">7 Days / Week</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Daily • High Intensity</div>
+              </div>
+              <span class="day-badge">Sprint</span>
+            </div>
+          </div>
+
+          <!-- Hidden select for compatibility -->
+          <select id="study-days" class="form-control" style="display: none;">
+            <option value="5">5 Days / Week</option>
+            <option value="6" selected>6 Days / Week</option>
+            <option value="7">7 Days / Week</option>
+          </select>
+        </div>
+
+        <!-- Routine Summary Banner -->
+        <div class="routine-summary-banner">
+          <div>
+            <span>⚡ Weekly Commitment: </span>
+            <strong id="weekly-hours-display" class="routine-summary-stat">12 Hours / week</strong>
+            <span style="font-size: 0.8rem; color: #94a3b8; margin-left: 0.35rem;">(6 days × 2 hrs)</span>
+          </div>
+          <span style="font-size: 0.78rem; font-weight: 600; color: #059669; background: #ecfdf5; padding: 0.2rem 0.6rem; border-radius: 999px;">
+            ✓ Sustainable Pace
+          </span>
+        </div>
+
+        <!-- Actions for Step 2 -->
+        <div class="onboard-actions-row">
+          <button type="button" class="btn-back" onclick="goToStep(1)">
+            ← Back to Tracks
+          </button>
+          <button type="button" class="btn-next" onclick="goToStep(3)">
+            Continue to Goals & Subjects →
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ==========================================
+           STEP 3: Goals & Focus Subjects
+           ========================================== -->
+      <div class="step-pane" id="step-3-pane">
+        <div class="step-heading">
+          <h2>Milestones & Focus Subjects</h2>
+          <p>Set a target date for your milestone and pick the key subjects you want to prioritize first.</p>
+        </div>
+
+        <!-- Target Date & Goal inputs -->
+        <div class="form-grid-2col">
+          
+          <div class="form-group">
+            <label for="onboard-target-date" class="form-label" style="font-weight: 700;">
+              Target Completion / Exam Date
+            </label>
+            <input type="date" id="onboard-target-date" class="form-control no-icon">
+            <div class="date-presets-row">
+              <button type="button" class="date-chip-btn" onclick="setPresetTargetDate(3)">+3 Months</button>
+              <button type="button" class="date-chip-btn" onclick="setPresetTargetDate(6)">+6 Months</button>
+              <button type="button" class="date-chip-btn" onclick="setPresetTargetDate(12)">+1 Year</button>
+              <button type="button" class="date-chip-btn" onclick="clearTargetDate()">Clear</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="specific-goal" class="form-label" style="font-weight: 700;">
+              Dream Goal / Target Note <span style="font-weight: 400; color: #94a3b8;">(Optional)</span>
+            </label>
+            <input type="text" id="specific-goal" class="form-control no-icon" placeholder="e.g. Crack SDE-1 / Target Top 500 Rank">
+            <div class="goal-chips-row" id="goal-suggestions-container">
+              <!-- Dynamically populated suggestions -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Focus Subjects Chips -->
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <div class="subject-chips-header">
+            <div>
+              <label class="form-label" style="font-weight: 700; margin-bottom: 0.15rem;">
+                Key Focus Subjects to Prioritize
+              </label>
+              <span id="selected-subjects-count" style="font-size: 0.78rem; color: #64748b;">
+                (Selected: 3 of 7)
+              </span>
+            </div>
+            <div class="subject-actions-row">
+              <button type="button" class="subject-action-btn" onclick="selectAllSubjects()">Select All</button>
+              <span style="color: #cbd5e1;">•</span>
+              <button type="button" class="subject-action-btn" onclick="resetDefaultSubjects()">Reset Default</button>
+            </div>
+          </div>
+
+          <div id="subject-chips-container" class="subject-chips-selector">
+            <!-- Dynamically populated based on chosen study path -->
+          </div>
+        </div>
+
+        <!-- Actions for Step 3 -->
+        <div class="onboard-actions-row">
+          <button type="button" class="btn-back" onclick="goToStep(2)">
+            ← Back to Routine
+          </button>
+          <button type="submit" class="btn-finish" id="onboard-submit-btn">
+            Complete Setup & Launch Dashboard 🚀
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>

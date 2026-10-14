@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress & Preparation Analytics — TaskFlow</title>
+  <meta name="description" content="Visual progress metrics, syllabus mastery, 7-day study velocity charts, and study focus session tracking.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Hidden SVG Defs for Gradients -->
+  <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+    <linearGradient id="readinessGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </svg>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
+      </div>
+
+      <nav class="sidebar-menu" aria-label="Main Navigation">
+        <div class="menu-label">Main Navigation</div>
+        
+        <a href="dashboard.html" class="nav-item" id="sidebar-nav-dashboard" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="study-path.html" class="nav-item" id="sidebar-nav-studypath" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>🗺️</span>
+            <span>My Study Path</span>
+          </div>
+        </a>
+
+        <a href="study-plan.html" class="nav-item" id="sidebar-nav-studyplan" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📅</span>
+            <span>My Study Plan</span>
+          </div>
+        </a>
+
+        <a href="tasks.html" class="nav-item" id="sidebar-nav-tasks" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📋</span>
+            <span>My Tasks</span>
+          </div>
+        </a>
+
+        <a href="analytics.html" class="nav-item active" id="sidebar-nav-analytics" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📈</span>
+            <span>Progress & Analytics</span>
+          </div>
+        </a>
+
+        <a href="profile.html" class="nav-item" id="sidebar-nav-profile" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>👤</span>
+            <span>My Profile</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-chip" style="text-decoration: none;">
+          <div class="user-avatar" id="nav-user-avatar">👨‍💻</div>
+          <div class="user-info">
+            <div class="user-name" id="nav-user-name">Loading...</div>
+            <div class="user-email" id="nav-user-email">user@example.com</div>
+          </div>
+        </a>
+
+        <div style="margin-top: 0.75rem;">
+          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="width: 100%; justify-content: center;" id="logout-btn">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Menu">
+            ☰
+          </button>
+          <div class="greeting-text">
+            <h2>Progress & Preparation Analytics</h2>
+            <p>Visual mastery insights, 7-day velocity breakdown, and study habit logs</p>
+          </div>
+        </div>
+
+        <div class="nav-right">
+          <button class="btn btn-primary btn-sm" onclick="openLogSessionModal()">
+            ⚡ Log Study Session
+          </button>
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">
+            ← Dashboard
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Analytics Content -->
+      <main class="dashboard-content" style="max-width: 1160px; margin: 0 auto; width: 100%;">
+        
+        <!-- Preparation Status Hero Card -->
+        <div class="analytics-hero-card">
+          <div class="analytics-hero-left">
+            <div class="analytics-hero-badge-row">
+              <span class="analytics-track-badge" id="hero-track-badge">
+                <span>💻</span> <span id="hero-track-name">Full Stack Track</span>
+              </span>
+              <span class="analytics-level-badge" id="hero-level-badge">Beginner Level</span>
+              <span class="badge badge-in-progress" id="hero-countdown-badge" style="display: none;">
+                ⏳ 0 Days Left
+              </span>
+            </div>
+
+            <div class="analytics-hero-title">Preparation Readiness Overview</div>
+            <div class="analytics-hero-subtitle" id="hero-status-message">
+              Tracking your syllabus roadmap completion, daily study streaks, and task execution velocity.
+            </div>
+
+            <div class="analytics-hero-stats">
+              <div class="analytics-hero-stat-item">
+                <span>🎯 Daily Target:</span>
+                <strong id="hero-daily-target">120 mins</strong>
+              </div>
+              <div class="analytics-hero-stat-item">
+                <span>📅 Target Date:</span>
+                <strong id="hero-target-date">Not Set</strong>
+              </div>
+              <div class="analytics-hero-stat-item">
+                <span>⚡ Study Habit:</span>
+                <strong id="hero-habit-status">Consistent</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="analytics-hero-right">
+            <div class="readiness-gauge-circle">
+              <svg class="readiness-gauge-svg" viewBox="0 0 100 100">
+                <circle class="readiness-gauge-bg" cx="50" cy="50" r="45"></circle>
+                <circle class="readiness-gauge-fill" id="readiness-gauge-fill" cx="50" cy="50" r="45"></circle>
+              </svg>
+              <div style="position: absolute; text-align: center;">
+                <div class="readiness-score-text" id="readiness-score-val">0%</div>
+              </div>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+              Readiness Score
+            </span>
+          </div>
+        </div>
+
+        <!-- 4 Primary KPI Summary Cards -->
+        <div class="analytics-kpi-grid">
+          
+          <!-- Card 1: Streak -->
+          <div class="analytics-kpi-card">
+            <div class="analytics-kpi-header">
+              <span class="analytics-kpi-label">Active Streak</span>
+              <span class="analytics-kpi-icon">🔥</span>
+            </div>
+            <div class="analytics-kpi-value" style="color: #ea580c;" id="kpi-streak">0d</div>
+            <div class="analytics-kpi-sub">
+              <span>⚡</span> <span id="kpi-streak-sub">Keep daily consistency</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Total Study Time -->
+          <div class="analytics-kpi-card">
+            <div class="analytics-kpi-header">
+              <span class="analytics-kpi-label">Total Focus Time</span>
+              <span class="analytics-kpi-icon">⏱️</span>
+            </div>
+            <div class="analytics-kpi-value" style="color: var(--accent-primary);" id="kpi-study-time">0h 0m</div>
+            <div class="analytics-kpi-sub">
+              <span>📊</span> <span id="kpi-week-time">0h this week</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Tasks Completed -->
+          <div class="analytics-kpi-card">
+            <div class="analytics-kpi-header">
+              <span class="analytics-kpi-label">Task Mastery</span>
+              <span class="analytics-kpi-icon">📋</span>
+            </div>
+            <div class="analytics-kpi-value" style="color: var(--color-completed);" id="kpi-tasks-completed">0</div>
+            <div class="analytics-kpi-sub">
+              <span>✅</span> <span id="kpi-task-rate">0% completion rate</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Roadmap Topics -->
+          <div class="analytics-kpi-card">
+            <div class="analytics-kpi-header">
+              <span class="analytics-kpi-label">Syllabus Coverage</span>
+              <span class="analytics-kpi-icon">🗺️</span>
+            </div>
+            <div class="analytics-kpi-value" style="color: #7c3aed;" id="kpi-roadmap-pct">0%</div>
+            <div class="analytics-kpi-sub">
+              <span>📚</span> <span id="kpi-roadmap-sub">0 of 0 topics done</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2 Column Charts & Logs Grid -->
+        <div class="analytics-2col-grid" style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+          
+          <!-- Left Column: 7-Day Velocity Chart -->
+          <div class="velocity-chart-wrapper">
+            <div class="velocity-chart-header">
+              <div>
+                <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">📊 Last 7 Days Study Velocity</h3>
+                <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-muted);">Daily study minutes & goal achievement</p>
+              </div>
+              <span class="badge badge-pending" style="font-size: 0.75rem;">Minutes / Day</span>
+            </div>
+
+            <!-- Dynamic Bar Chart Render Area -->
+            <div class="velocity-bars-area" id="analytics-weekly-chart">
+              <!-- Rendered by analytics.js -->
+            </div>
+
+            <!-- Velocity Summary Metrics Strip -->
+            <div class="velocity-summary-strip">
+              <div class="velocity-summary-item">
+                <div class="velocity-summary-num" id="summary-week-total">0h</div>
+                <div class="velocity-summary-lbl">Week Total</div>
+              </div>
+              <div class="velocity-summary-item">
+                <div class="velocity-summary-num" id="summary-daily-avg">0m</div>
+                <div class="velocity-summary-lbl">Daily Avg</div>
+              </div>
+              <div class="velocity-summary-item">
+                <div class="velocity-summary-num" id="summary-peak-day">-</div>
+                <div class="velocity-summary-lbl">Peak Day</div>
+              </div>
+              <div class="velocity-summary-item">
+                <div class="velocity-summary-num" id="summary-goals-met">0/7</div>
+                <div class="velocity-summary-lbl">Goals Hit</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Subject Mastery Breakdown -->
+          <div class="velocity-chart-wrapper">
+            <div class="velocity-chart-header">
+              <div>
+                <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">📚 Subject Mastery Breakdown</h3>
+                <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-muted);">Completion by track module & topics</p>
+              </div>
+            </div>
+
+            <!-- Subject Progress List -->
+            <div class="subject-mastery-list" id="analytics-subject-breakdown">
+              <!-- Rendered by analytics.js -->
+            </div>
+
+            <!-- Task Priority Distribution -->
+            <div class="priority-meter-row" id="analytics-priority-row">
+              <div class="priority-pill-tag high">
+                <div id="priority-high-count">0</div>
+                <span>High Priority</span>
+              </div>
+              <div class="priority-pill-tag med">
+                <div id="priority-med-count">0</div>
+                <span>Medium Priority</span>
+              </div>
+              <div class="priority-pill-tag low">
+                <div id="priority-low-count">0</div>
+                <span>Low Priority</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Recent Study Sessions Log Section -->
+        <div class="settings-card" style="padding: 1.75rem; margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.85rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">⏱️ Study Focus Sessions Log</h3>
+              <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-muted);">Recent pomodoros, deep work, and practice logs</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openLogSessionModal()">
+              + Log Session
+            </button>
+          </div>
+
+          <div id="analytics-sessions-list">
+            <!-- Rendered by analytics.js -->
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Log Session Modal -->
+  <div class="modal-backdrop" id="log-session-modal">
+    <div class="modal-box" style="max-width: 480px;" role="dialog" aria-labelledby="modal-log-title">
+      <div class="modal-header">
+        <h3 id="modal-log-title">⏱️ Log Study Focus Session</h3>
+        <button class="modal-close" onclick="closeModal('log-session-modal')">✕</button>
+      </div>
+      <form id="log-session-form">
+        <div class="modal-body">
+          
+          <!-- Quick Duration Presets -->
+          <div class="form-group">
+            <label class="form-label">Quick Duration Presets</label>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 0.75rem;">
+              <button type="button" class="session-preset-btn" onclick="selectDurationPreset(25, this)">25m<br><span style="font-size: 0.7rem; color: var(--text-muted);">Pomodoro</span></button>
+              <button type="button" class="session-preset-btn active" onclick="selectDurationPreset(45, this)">45m<br><span style="font-size: 0.7rem; color: var(--text-muted);">Standard</span></button>
+              <button type="button" class="session-preset-btn" onclick="selectDurationPreset(60, this)">60m<br><span style="font-size: 0.7rem; color: var(--text-muted);">Deep Work</span></button>
+              <button type="button" class="session-preset-btn" onclick="selectDurationPreset(90, this)">90m<br><span style="font-size: 0.7rem; color: var(--text-muted);">Intensive</span></button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="session-duration" class="form-label">Duration (Minutes) *</label>
+            <input type="number" id="session-duration" class="form-control no-icon" value="45" min="5" max="720" required>
+          </div>
+
+          <div class="form-group">
+            <label for="session-notes" class="form-label">Topic / Focus Notes</label>
+            <textarea id="session-notes" class="form-control no-icon" rows="3" placeholder="e.g. Practiced 30 quantitative aptitude questions, reviewed DSA graphs & algorithms"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('log-session-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="save-session-btn">Save Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/analytics.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — TaskFlow</title>
+  <meta name="description" content="Sign in to your TaskFlow account to manage your daily tasks, sprints, and priorities.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Top Simple Navigation for Auth Pages -->
+  <div style="position: absolute; top: 1.25rem; left: 1.5rem; z-index: 20;">
+    <a href="index.html" class="nav-link-btn nav-btn-home" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px);" title="Return to Home Page">
+      ← Home
+    </a>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 480px;">
+      <div class="auth-header">
+        <a href="index.html" class="brand-logo" style="justify-content: center; margin-bottom: 1.25rem; text-decoration: none;">
+          <div class="brand-icon">⚡</div>
+          <span>Task<span class="gradient-text">Flow</span></span>
+        </a>
+        <h1>Welcome Back</h1>
+        <p>Enter your credentials to access your study workspace</p>
+      </div>
+
+      <form id="login-form" autocomplete="on">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-container">
+            <span class="input-icon">✉️</span>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-control" 
+              placeholder="name@example.com" 
+              required 
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label for="password" class="form-label" style="margin-bottom: 0;">Password</label>
+          </div>
+          <div class="input-container">
+            <span class="input-icon">🔒</span>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-control" 
+              placeholder="••••••••" 
+              required 
+              autocomplete="current-password"
+            >
+            <button type="button" class="password-toggle" aria-label="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; margin-top: 0.5rem;" id="login-submit-btn">
+          Sign In to Dashboard →
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Don't have an account? <a href="register.html" id="to-register-link">Create one now</a></p>
+        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; font-size: 0.85rem;">
+          <a href="index.html" style="color: var(--text-muted);">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

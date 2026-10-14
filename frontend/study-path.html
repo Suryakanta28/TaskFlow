@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Study Path & Roadmap — TaskFlow</title>
+  <meta name="description" content="View, customize, and track your complete syllabus roadmap and learning milestones.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/roadmap.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
+      </div>
+
+      <nav class="sidebar-menu" aria-label="Main Navigation">
+        <div class="menu-label">Main Navigation</div>
+        
+        <a href="dashboard.html" class="nav-item" id="sidebar-nav-dashboard" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="study-path.html" class="nav-item active" id="sidebar-nav-studypath" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>🗺️</span>
+            <span>My Study Path</span>
+          </div>
+        </a>
+
+        <a href="study-plan.html" class="nav-item" id="sidebar-nav-studyplan" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📅</span>
+            <span>My Study Plan</span>
+          </div>
+        </a>
+
+        <a href="tasks.html" class="nav-item" id="sidebar-nav-tasks" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📋</span>
+            <span>My Tasks</span>
+          </div>
+        </a>
+
+        <a href="analytics.html" class="nav-item" id="sidebar-nav-analytics" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📈</span>
+            <span>Progress & Analytics</span>
+          </div>
+        </a>
+
+        <a href="profile.html" class="nav-item" id="sidebar-nav-profile" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>👤</span>
+            <span>My Profile</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-chip" style="text-decoration: none;">
+          <div class="user-avatar">U</div>
+          <div class="user-info">
+            <div class="user-name">Loading...</div>
+            <div class="user-email">user@example.com</div>
+          </div>
+        </a>
+
+        <div style="margin-top: 0.75rem;">
+          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="width: 100%; justify-content: center;" id="logout-btn">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Menu">
+            ☰
+          </button>
+          <div class="greeting-text">
+            <h2>My Study Path & Roadmap</h2>
+            <p>Structured curriculum overview, milestone shortcuts, and topic checklists</p>
+          </div>
+        </div>
+
+        <div class="nav-right" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <select id="roadmap-track-switcher" class="form-control" onchange="handleRoadmapTrackSwitch(this.value)" style="height: 38px; padding: 0.2rem 0.6rem; font-size: 0.82rem; font-weight: 700; border: 1.5px solid #c7d2fe; border-radius: 8px; background: #ffffff; cursor: pointer; color: #1e1b4b;" title="Switch curriculum track">
+            <option value="FULL_STACK">💻 Full Stack Web Dev</option>
+            <option value="SSC">🏛️ SSC CGL & CHSL</option>
+            <option value="RAILWAY">🚆 Railway (RRB NTPC)</option>
+            <option value="JEE">📐 IIT JEE Main & Adv</option>
+            <option value="NEET">🩺 NEET Medical UG</option>
+          </select>
+          <button class="btn btn-primary" onclick="openAddTopicModal()" id="add-custom-topic-btn">
+            <span>+</span>
+            <span>Add Custom Topic</span>
+          </button>
+          <a href="profile.html" class="btn btn-secondary btn-sm" title="Change Track">
+            ⚙️ Track Settings
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Roadmap Content -->
+      <main class="dashboard-content" style="max-width: 1120px; margin: 0 auto; width: 100%;">
+        
+        <!-- Track Hero & Progress Overview Card -->
+        <div class="roadmap-hero-card" id="roadmap-hero">
+          
+          <div class="roadmap-hero-top">
+            <div class="roadmap-title-row">
+              <span class="roadmap-icon" id="roadmap-track-icon">💻</span>
+              <div>
+                <h2 id="roadmap-track-title">Loading Curriculum...</h2>
+                <p id="roadmap-track-desc">Comprehensive curriculum covering essential fundamentals and core milestones.</p>
+              </div>
+            </div>
+
+            <div class="roadmap-hero-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm" onclick="resumeNextTopic()" id="resume-topic-btn" title="Jump to your next incomplete topic">
+                ⚡ Resume Learning
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="expandAllPhases()" title="Expand all phases">
+                ↕ Expand All
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="collapseAllPhases()" title="Collapse all phases">
+                ↔ Collapse All
+              </button>
+            </div>
+          </div>
+
+          <!-- Overall Progress Bar -->
+          <div class="roadmap-progress-wrap">
+            <div class="roadmap-progress-header">
+              <span>Overall Curriculum Completion</span>
+              <strong id="roadmap-overall-pct">0%</strong>
+            </div>
+            <div class="phase-progress-bar-bg" style="height: 10px;">
+              <div id="roadmap-overall-fill" class="phase-progress-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- 4 KPI Metrics -->
+          <div class="roadmap-kpi-grid">
+            <div class="roadmap-kpi-box">
+              <span class="roadmap-kpi-icon">📚</span>
+              <div>
+                <span class="roadmap-kpi-label">Total Phases</span>
+                <span class="roadmap-kpi-val" id="roadmap-total-phases">0</span>
+              </div>
+            </div>
+
+            <div class="roadmap-kpi-box">
+              <span class="roadmap-kpi-icon">📌</span>
+              <div>
+                <span class="roadmap-kpi-label">Total Topics</span>
+                <span class="roadmap-kpi-val" id="roadmap-total-topics">0</span>
+              </div>
+            </div>
+
+            <div class="roadmap-kpi-box">
+              <span class="roadmap-kpi-icon">✅</span>
+              <div>
+                <span class="roadmap-kpi-label">Completed</span>
+                <span class="roadmap-kpi-val" id="roadmap-completed-topics" style="color: #059669;">0</span>
+              </div>
+            </div>
+
+            <div class="roadmap-kpi-box">
+              <span class="roadmap-kpi-icon">⏱️</span>
+              <div>
+                <span class="roadmap-kpi-label">Est. Total Time</span>
+                <span class="roadmap-kpi-val" id="roadmap-total-hours">~0h</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Shortcut Milestone Flow Strip (Structure at a Glance) -->
+        <div class="roadmap-shortcut-panel" id="roadmap-shortcut-panel">
+          <div class="shortcut-panel-header">
+            <span class="shortcut-panel-title">
+              <span>⚡</span>
+              <span>Roadmap Flow (Shortcut Milestones)</span>
+            </span>
+            <span class="shortcut-hint">Click any phase milestone to jump directly to it</span>
+          </div>
+
+          <div class="roadmap-flow-strip" id="roadmap-flow-strip">
+            <!-- Dynamically populated shortcut milestone nodes -->
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="roadmap-toolbar">
+          <div class="roadmap-toolbar-left">
+            <div class="roadmap-search-box">
+              <span class="roadmap-search-icon">🔍</span>
+              <input type="text" id="roadmap-search" placeholder="Search topic or module..." oninput="filterTopics()">
+            </div>
+
+            <button class="filter-pill-btn active" data-filter="all" onclick="setTopicFilter('all', this)">
+              All Topics (<span id="count-filter-all">0</span>)
+            </button>
+            <button class="filter-pill-btn" data-filter="pending" onclick="setTopicFilter('pending', this)">
+              ⏳ Incomplete (<span id="count-filter-pending">0</span>)
+            </button>
+            <button class="filter-pill-btn" data-filter="completed" onclick="setTopicFilter('completed', this)">
+              ✅ Completed (<span id="count-filter-completed">0</span>)
+            </button>
+          </div>
+
+          <div class="roadmap-toolbar-right">
+            <button class="filter-pill-btn active" id="view-mode-btn" onclick="toggleViewMode()" title="Toggle compact shortcut vs detailed mode">
+              ⚡ Shortcut View
+            </button>
+          </div>
+        </div>
+
+        <!-- Roadmap Structured Phase Accordion Cards -->
+        <div id="roadmap-phases-container" class="roadmap-phases-list">
+          <!-- Dynamically populated by study-path.js -->
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Custom Topic Modal -->
+  <div class="modal-backdrop" id="add-topic-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="add-topic-modal-title">
+      <div class="modal-header">
+        <h3 id="add-topic-modal-title">Add Custom Learning Topic</h3>
+        <button class="modal-close" onclick="closeModal('add-topic-modal')">✕</button>
+      </div>
+      <form id="add-topic-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="topic-phase-select" class="form-label">Select Roadmap Phase *</label>
+            <select id="topic-phase-select" class="form-control custom-select no-icon" required>
+              <!-- Options populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="topic-title" class="form-label">Topic Title *</label>
+            <input type="text" id="topic-title" class="form-control no-icon" placeholder="e.g. Master Binary Search & Two Pointers" required maxlength="200">
+          </div>
+
+          <div class="form-group">
+            <label for="topic-desc" class="form-label">Description / Summary (Optional)</label>
+            <textarea id="topic-desc" class="form-control no-icon" rows="2" placeholder="Key learning concepts, formulas, or practice goals..."></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="topic-subject" class="form-label">Subject / Module</label>
+              <input type="text" id="topic-subject" class="form-control no-icon" placeholder="e.g. Frontend / Python / Physics" required>
+            </div>
+
+            <div class="form-group">
+              <label for="topic-duration" class="form-label">Estimated Minutes</label>
+              <input type="number" id="topic-duration" class="form-control no-icon" value="60" min="15" max="600">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="topic-resource" class="form-label">Resource / Reference URL (Optional)</label>
+            <input type="url" id="topic-resource" class="form-control no-icon" placeholder="https://docs.example.com/topic">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('add-topic-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add to Roadmap</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Syllabus Topic Modal -->
+  <div class="modal-backdrop" id="edit-topic-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="edit-topic-modal-title">
+      <div class="modal-header">
+        <h3 id="edit-topic-modal-title">✏️ Edit Syllabus Topic</h3>
+        <button class="modal-close" onclick="closeModal('edit-topic-modal')">✕</button>
+      </div>
+      <form id="edit-topic-form">
+        <input type="hidden" id="edit-topic-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-topic-title" class="form-label">Topic Title *</label>
+            <input type="text" id="edit-topic-title" class="form-control no-icon" required maxlength="200">
+          </div>
+          <div class="form-group">
+            <label for="edit-topic-desc" class="form-label">Description / Summary (Notes)</label>
+            <textarea id="edit-topic-desc" class="form-control no-icon" rows="2" placeholder="Key learning concepts, formulas, or notes..."></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="edit-topic-subject" class="form-label">Subject / Module *</label>
+              <input type="text" id="edit-topic-subject" class="form-control no-icon" required>
+            </div>
+            <div class="form-group">
+              <label for="edit-topic-duration" class="form-label">Estimated Minutes</label>
+              <input type="number" id="edit-topic-duration" class="form-control no-icon" min="15" max="600" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-topic-resource" class="form-label">Resource / Reference URL (Optional)</label>
+            <input type="url" id="edit-topic-resource" class="form-control no-icon" placeholder="https://docs.example.com/topic">
+          </div>
+        </div>
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-danger btn-sm" onclick="handleDeleteCurrentEditingTopic()">🗑️ Delete Topic</button>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('edit-topic-modal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Schedule Topic to Study Plan Modal -->
+  <div class="modal-backdrop" id="schedule-topic-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="schedule-topic-modal-title">
+      <div class="modal-header">
+        <h3 id="schedule-topic-modal-title">📅 Add Topic to Study Plan</h3>
+        <button class="modal-close" onclick="closeModal('schedule-topic-modal')">✕</button>
+      </div>
+      <form id="schedule-topic-form">
+        <input type="hidden" id="schedule-topic-id">
+        <div class="modal-body">
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.85rem; margin-bottom: 1rem;">
+            <strong id="schedule-topic-name" style="color: #1e1b4b; display: block; font-size: 0.95rem; margin-bottom: 0.2rem;"></strong>
+            <span id="schedule-topic-sub" style="font-size: 0.8rem; color: #64748b;"></span>
+          </div>
+          <div class="form-group">
+            <label for="schedule-topic-date" class="form-label">Planned Study Date *</label>
+            <input type="date" id="schedule-topic-date" class="form-control no-icon" required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="schedule-topic-duration" class="form-label">Planned Minutes</label>
+              <input type="number" id="schedule-topic-duration" class="form-control no-icon" value="60" min="15" max="600" required>
+            </div>
+            <div class="form-group">
+              <label for="schedule-topic-priority" class="form-label">Priority</label>
+              <select id="schedule-topic-priority" class="form-control custom-select no-icon">
+                <option value="High">High 🔴</option>
+                <option value="Medium" selected>Medium 🟡</option>
+                <option value="Low">Low 🟢</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('schedule-topic-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add to My Study Plan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/study-path.js"></script>
+</body>
+</html>

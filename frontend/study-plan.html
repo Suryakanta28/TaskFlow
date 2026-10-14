@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Study Plan — TaskFlow</title>
+  <meta name="description" content="Organize daily and weekly study schedules, allocate planned minutes, and avoid overdue backlogs.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
+      </div>
+
+      <nav class="sidebar-menu" aria-label="Main Navigation">
+        <div class="menu-label">Main Navigation</div>
+        
+        <a href="dashboard.html" class="nav-item" id="sidebar-nav-dashboard" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="study-path.html" class="nav-item" id="sidebar-nav-studypath" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>🗺️</span>
+            <span>My Study Path</span>
+          </div>
+        </a>
+
+        <a href="study-plan.html" class="nav-item active" id="sidebar-nav-studyplan" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📅</span>
+            <span>My Study Plan</span>
+          </div>
+        </a>
+
+        <a href="tasks.html" class="nav-item" id="sidebar-nav-tasks" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📋</span>
+            <span>My Tasks</span>
+          </div>
+        </a>
+
+        <a href="analytics.html" class="nav-item" id="sidebar-nav-analytics" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>📈</span>
+            <span>Progress & Analytics</span>
+          </div>
+        </a>
+
+        <a href="profile.html" class="nav-item" id="sidebar-nav-profile" style="text-decoration: none;">
+          <div class="nav-item-left">
+            <span>👤</span>
+            <span>My Profile</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-chip" style="text-decoration: none;">
+          <div class="user-avatar">👨‍💻</div>
+          <div class="user-info">
+            <div class="user-name">Loading...</div>
+            <div class="user-email">user@example.com</div>
+          </div>
+        </a>
+
+        <div style="margin-top: 0.75rem;">
+          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="width: 100%; justify-content: center;" id="logout-btn">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Menu">
+            ☰
+          </button>
+          <div class="greeting-text">
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <h2 style="margin: 0;">Daily & Weekly Study Planner</h2>
+              <span id="plan-track-badge" class="badge" style="background: #e0e7ff; color: #4338ca; font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 999px;">Loading Track...</span>
+            </div>
+            <p style="margin: 0.25rem 0 0 0;">Schedule your syllabus topics and daily study hours to maintain momentum</p>
+          </div>
+        </div>
+
+        <div class="nav-right">
+          <a href="study-path.html" class="btn btn-secondary btn-sm">
+            🗺️ View Full Roadmap
+          </a>
+          <a href="dashboard.html" class="btn btn-primary btn-sm">
+            ← Dashboard
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Study Plan Content -->
+      <main class="dashboard-content" style="max-width: 1140px; margin: 0 auto; width: 100%;">
+        
+        <!-- Planner Header Summary -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="profile-stat-box">
+            <span class="stat-num" id="today-planned-minutes">0m</span>
+            <span class="stat-lbl">Today's Planned Time</span>
+          </div>
+          <div class="profile-stat-box">
+            <span class="stat-num" id="today-tasks-count">0</span>
+            <span class="stat-lbl">Today's Tasks</span>
+          </div>
+          <div class="profile-stat-box">
+            <span class="stat-num" style="color: var(--color-completed);" id="today-completed-count">0</span>
+            <span class="stat-lbl">Completed Today</span>
+          </div>
+          <div class="profile-stat-box">
+            <span class="stat-num" style="color: #7c3aed;" id="week-planned-tasks">0</span>
+            <span class="stat-lbl">Upcoming Week Plan</span>
+          </div>
+        </div>
+
+        <!-- NEW: Syllabus Topics Ready to Schedule Strip -->
+        <div class="settings-card" style="padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #4f46e5;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📚</span>
+                <span>Active Syllabus Topics Ready to Schedule</span>
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0 0;">
+                Directly pulled from your active study curriculum. Click <strong>+ Add to Today</strong> to schedule with 1-click.
+              </p>
+            </div>
+            <a href="study-path.html" class="btn btn-secondary btn-sm" style="font-weight: 700;">
+              🗺️ Open Roadmap →
+            </a>
+          </div>
+
+          <div id="unscheduled-topics-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem;">
+            <!-- Dynamically populated by study-plan.js -->
+          </div>
+        </div>
+
+        <!-- 7-Day Weekly Schedule Strip -->
+        <div class="settings-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="margin: 0; font-size: 1.15rem;">📅 7-Day Study Schedule</h3>
+            <span style="font-size: 0.85rem; color: var(--text-muted);" id="week-range-label">This Week</span>
+          </div>
+
+          <div id="weekly-days-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem;">
+            <!-- Rendered by study-plan.js -->
+          </div>
+        </div>
+
+        <!-- Today's Detailed Schedule List -->
+        <div class="settings-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem;">📌 Focus Agenda for Today</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0 0;" id="today-date-heading">Today</p>
+            </div>
+            <a href="study-path.html" class="btn btn-primary btn-sm">+ Browse Full Syllabus</a>
+          </div>
+
+          <div id="today-detailed-container">
+            <!-- Rendered by study-plan.js -->
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Reschedule / Edit Study Plan Task Modal -->
+  <div class="modal-backdrop" id="reschedule-task-modal">
+    <div class="modal-box" role="dialog" aria-labelledby="reschedule-task-modal-title">
+      <div class="modal-header">
+        <h3 id="reschedule-task-modal-title">✏️ Edit / Reschedule Study Task</h3>
+        <button class="modal-close" onclick="closeModal('reschedule-task-modal')">✕</button>
+      </div>
+      <form id="reschedule-task-form">
+        <input type="hidden" id="reschedule-task-id">
+        <div class="modal-body">
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.85rem; margin-bottom: 1rem;">
+            <strong id="reschedule-task-title" style="color: #0f172a; display: block; font-size: 0.95rem; margin-bottom: 0.2rem;"></strong>
+            <span id="reschedule-task-category" style="font-size: 0.8rem; color: #64748b;"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reschedule-task-date" class="form-label">Scheduled Study Date *</label>
+            <input type="date" id="reschedule-task-date" class="form-control no-icon" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="reschedule-task-duration" class="form-label">Estimated Minutes</label>
+              <input type="number" id="reschedule-task-duration" class="form-control no-icon" min="15" max="600" required>
+            </div>
+            <div class="form-group">
+              <label for="reschedule-task-priority" class="form-label">Priority</label>
+              <select id="reschedule-task-priority" class="form-control custom-select no-icon">
+                <option value="High">High 🔴</option>
+                <option value="Medium">Medium 🟡</option>
+                <option value="Low">Low 🟢</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-danger btn-sm" onclick="handleRemoveTaskFromPlan()">🗑️ Remove from Today</button>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('reschedule-task-modal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/study-plan.js"></script>
+</body>
+</html>
