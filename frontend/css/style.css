@@ -854,13 +854,7 @@ button {
 }
 
 .menu-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  color: var(--text-muted);
-  padding: 0 0.75rem;
-  margin-bottom: 0.75rem;
+  display: none !important;
 }
 
 .nav-item {
@@ -967,6 +961,11 @@ button {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 0;
+  max-width: calc(100% - var(--sidebar-width));
+  width: calc(100% - var(--sidebar-width));
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Top Navbar (Sticky) */
@@ -985,6 +984,10 @@ button {
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .nav-left {
@@ -1121,10 +1124,12 @@ button {
 /* Page Content */
 .dashboard-content {
   flex: 1;
-  padding: 2rem;
-  max-width: 1400px;
+  padding: 1.75rem 2rem;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Stats Cards Grid */
@@ -1590,6 +1595,10 @@ button {
 
   .main-wrapper {
     margin-left: 0;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .mobile-toggle {
@@ -1633,7 +1642,12 @@ button {
   }
 
   .dashboard-content {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    min-width: 0;
+    box-sizing: border-box;
   }
 }
 

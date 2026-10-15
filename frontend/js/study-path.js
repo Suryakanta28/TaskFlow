@@ -123,7 +123,7 @@ function renderRoadmapHeader(path) {
 
   const switcher = document.getElementById('roadmap-track-switcher');
   if (switcher && path.category) {
-    switcher.value = path.category;
+    switcher.value = path.category.toUpperCase();
   }
 }
 
@@ -708,7 +708,10 @@ function escapeHtml(str) {
 async function handleRoadmapTrackSwitch(categoryCode) {
   try {
     showToast('Switching curriculum roadmap...', 'info');
-    await api.users.update({ category: categoryCode });
+    const updatedUser = await api.users.update({ category: categoryCode });
+    if (updatedUser) {
+      Auth.setUser(updatedUser);
+    }
     await loadRoadmap();
     showToast(`Switched to ${categoryCode} track! Roadmap updated. ✨`, 'success');
   } catch (err) {

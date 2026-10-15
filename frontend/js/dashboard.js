@@ -4,8 +4,9 @@
  */
 
 let dashboardData = null;
+const POMODORO_DURATION_SECONDS = 25 * 60; // 25 minutes
 let pomodoroInterval = null;
-let pomodoroSecondsLeft = 25 * 60;
+let pomodoroSecondsLeft = POMODORO_DURATION_SECONDS;
 let isPomodoroRunning = false;
 
 // Task Tab State
@@ -57,7 +58,7 @@ async function loadDashboardOverview() {
     // Synchronize quick track switcher dropdown
     const switcher = document.getElementById('track-switcher-select');
     if (switcher && user.category) {
-      switcher.value = user.category;
+      switcher.value = user.category.toUpperCase();
     }
 
     // Render all dashboard sections
@@ -89,7 +90,10 @@ async function switchStudyTrack(categoryCode) {
   if (!categoryCode) return;
   try {
     showToast('Switching study path curriculum...', 'info');
-    await api.users.update({ category: categoryCode });
+    const updatedUser = await api.users.update({ category: categoryCode });
+    if (updatedUser) {
+      Auth.setUser(updatedUser);
+    }
     await loadDashboardOverview();
     showToast(`Switched to ${categoryCode} track! Dashboard & curriculum updated. ✨`, 'success');
   } catch (err) {
@@ -269,7 +273,7 @@ function renderActiveTaskTab() {
 
     html += `
       <div class="dash-task-row ${isDone ? 'is-completed' : ''}" id="task-row-${task.id}">
-        <div style="display: flex; align-items: center; gap: 0.85rem; flex: 1;">
+        <div style="display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0;">
           <button 
             type="button" 
             class="dash-task-check" 
@@ -279,7 +283,7 @@ function renderActiveTaskTab() {
             ${isDone ? '✓' : ''}
           </button>
           
-          <div style="flex: 1;">
+          <div style="flex: 1; min-width: 0;">
             <div class="dash-task-title">
               ${escapeHtml(task.title)}
             </div>
@@ -293,13 +297,13 @@ function renderActiveTaskTab() {
           </div>
         </div>
 
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
+        <div style="display: flex; gap: 0.4rem; align-items: center; flex-shrink: 0;">
           ${!isDone ? `
             <button class="btn-focus-task" onclick="startFocusOnTask('${escapeHtml(task.title)}')">
               ⏱️ Focus
             </button>
           ` : `
-            <span style="font-size: 0.75rem; font-weight: 700; color: #059669; background: #ecfdf5; padding: 0.2rem 0.55rem; border-radius: 999px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: #059669; background: #ecfdf5; padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap;">
               Completed ✓
             </span>
           `}
@@ -327,17 +331,17 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
   // 1. Current Active Topic Card
   if (widget && widget.has_active_topic) {
     html += `
-      <div style="background: #f8fafc; border: 1.5px solid #e0e7ff; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 5px rgba(79, 70, 229, 0.05);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-          <div>
-            <span style="font-size: 0.72rem; font-weight: 700; color: #4338ca; text-transform: uppercase; letter-spacing: 0.05em; background: #e0e7ff; padding: 0.2rem 0.6rem; border-radius: 6px;">
+      <div class="active-topic-card" style="background: #f8fafc; border: 1.5px solid #e0e7ff; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 5px rgba(79, 70, 229, 0.05); min-width: 0; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; gap: 0.75rem; min-width: 0;">
+          <div style="min-width: 0; flex: 1;">
+            <span style="font-size: 0.72rem; font-weight: 700; color: #4338ca; text-transform: uppercase; letter-spacing: 0.05em; background: #e0e7ff; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
               ${escapeHtml(widget.phase_title || 'Phase 1')} • ${escapeHtml(widget.subject || 'General')}
             </span>
-            <h4 style="margin: 0.5rem 0 0 0; font-size: 1.05rem; font-weight: 800; color: #0f172a; line-height: 1.35;">
+            <h4 style="margin: 0.5rem 0 0 0; font-size: 1.05rem; font-weight: 800; color: #0f172a; line-height: 1.35; word-break: break-word; overflow-wrap: break-word;">
               ${escapeHtml(widget.topic_title)}
             </h4>
           </div>
-          <span class="badge" style="background: #ede9fe; color: #7c3aed; font-weight: 700; font-size: 0.75rem;">
+          <span class="badge" style="background: #ede9fe; color: #7c3aed; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; white-space: nowrap;">
             ⏱️ ${widget.estimated_minutes || 60}m
           </span>
         </div>
@@ -352,12 +356,12 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
           </div>
         </div>
 
-        <div style="display: flex; gap: 0.6rem; justify-content: space-between;">
-          <a href="study-path.html" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; text-decoration: none; padding: 0.55rem 0.85rem; font-weight: 700;">
+        <div style="display: flex; gap: 0.6rem; justify-content: space-between; flex-wrap: wrap;">
+          <a href="study-path.html" class="btn btn-primary btn-sm" style="flex: 1; min-width: 140px; justify-content: center; text-decoration: none; padding: 0.55rem 0.85rem; font-weight: 700; white-space: nowrap;">
             🗺️ Resume in Roadmap →
           </a>
           ${widget.topic_id ? `
-            <button class="btn btn-secondary btn-sm" onclick="markRoadmapTopicDone(${widget.topic_id})" title="Mark Topic as Completed" style="font-weight: 700;">
+            <button class="btn btn-secondary btn-sm" onclick="markRoadmapTopicDone(${widget.topic_id})" title="Mark Topic as Completed" style="font-weight: 700; white-space: nowrap;">
               ✓ Mark Done
             </button>
           ` : ''}
@@ -366,7 +370,7 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
     `;
   } else {
     html += `
-      <div style="background: #ecfdf5; border: 1.5px solid #a7f3d0; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.25rem; text-align: center;">
+      <div style="background: #ecfdf5; border: 1.5px solid #a7f3d0; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.25rem; text-align: center; min-width: 0; width: 100%; box-sizing: border-box;">
         <div style="font-size: 2rem; margin-bottom: 0.25rem;">🎉</div>
         <h4 style="color: #065f46; font-weight: 800; margin-bottom: 0.25rem;">All Syllabus Milestones Completed!</h4>
         <p style="color: #047857; font-size: 0.85rem; margin-bottom: 0.75rem;">Great job! You've completed all topics in this study path curriculum.</p>
@@ -378,12 +382,12 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
   // 2. Syllabus Phases Pathway
   if (phases && phases.length > 0) {
     html += `
-      <div style="margin-bottom: 1.25rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+      <div style="margin-bottom: 1.25rem; min-width: 0; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 0.5rem;">
           <span style="font-size: 0.8rem; font-weight: 800; color: #334155; text-transform: uppercase; letter-spacing: 0.04em;">
             Milestone Phases (${phases.length})
           </span>
-          <a href="study-path.html" style="font-size: 0.75rem; color: #4f46e5; font-weight: 700; text-decoration: none;">View All →</a>
+          <a href="study-path.html" style="font-size: 0.75rem; color: #4f46e5; font-weight: 700; text-decoration: none; flex-shrink: 0;">View All →</a>
         </div>
         <div class="syllabus-phases-strip">
     `;
@@ -409,12 +413,12 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
   // 3. Subject-wise Syllabus Progress
   if (subjects && subjects.length > 0) {
     html += `
-      <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+      <div style="min-width: 0; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; gap: 0.5rem;">
           <span style="font-size: 0.8rem; font-weight: 800; color: #334155; text-transform: uppercase; letter-spacing: 0.04em;">
             Core Subjects Breakdown
           </span>
-          <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">${catInfo.name}</span>
+          <span style="font-size: 0.75rem; color: #64748b; font-weight: 600; white-space: nowrap;">${catInfo.name}</span>
         </div>
     `;
 
@@ -422,7 +426,7 @@ function renderContinueLearning(widget, phases = [], subjects = [], user = null)
       html += `
         <div class="syllabus-subject-card">
           <div class="syllabus-subject-header">
-            <span>${escapeHtml(sub.subject)}</span>
+            <span class="syllabus-subject-title" title="${escapeHtml(sub.subject)}">${escapeHtml(sub.subject)}</span>
             <span class="syllabus-subject-meta">${sub.completed}/${sub.total} topics (${sub.progress_percentage}%)</span>
           </div>
           <div style="height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden;">
@@ -447,14 +451,14 @@ function renderUpcomingTasks(tasks) {
 
   if (!tasks || tasks.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
+      <div style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); min-width: 0; width: 100%; box-sizing: border-box;">
         <p style="font-size: 0.85rem; margin: 0; color: #64748b;">No upcoming deadlines for the next 7 days. You're fully caught up! 🎉</p>
       </div>
     `;
     return;
   }
 
-  let html = '<div style="display: flex; flex-direction: column; gap: 0.65rem;">';
+  let html = '<div style="display: flex; flex-direction: column; gap: 0.65rem; min-width: 0; width: 100%; box-sizing: border-box;">';
   tasks.forEach(task => {
     const formattedDate = task.due_date 
       ? new Date(task.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -462,7 +466,7 @@ function renderUpcomingTasks(tasks) {
 
     html += `
       <div class="dash-task-row">
-        <div>
+        <div style="flex: 1; min-width: 0;">
           <div class="dash-task-title">
             ${escapeHtml(task.title)}
           </div>
@@ -472,7 +476,7 @@ function renderUpcomingTasks(tasks) {
           </div>
         </div>
         <div style="text-align: right; flex-shrink: 0;">
-          <span style="font-size: 0.8rem; font-weight: 700; color: #4f46e5; background: #eef2ff; padding: 0.25rem 0.6rem; border-radius: 6px; border: 1px solid #c7d2fe;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: #4f46e5; background: #eef2ff; padding: 0.25rem 0.6rem; border-radius: 6px; border: 1px solid #c7d2fe; white-space: nowrap;">
             📅 ${formattedDate}
           </span>
         </div>
@@ -491,39 +495,133 @@ function renderWeeklyVelocity(progress) {
   const container = document.getElementById('weekly-progress-container');
   if (!container) return;
 
-  if (!progress || !progress.days) {
-    container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No activity logged this week.</p>`;
-    return;
+  const defaultWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  // Normalize days array safely
+  let days = [];
+  if (progress && Array.isArray(progress.days) && progress.days.length > 0) {
+    days = progress.days;
+  } else {
+    days = defaultWeekdays.map((name, idx) => ({
+      day_of_week: name,
+      day: name,
+      study_minutes: 0,
+      completed_tasks_count: 0,
+      goal_reached: false
+    }));
   }
 
-  const maxMinutes = Math.max(...progress.days.map(d => d.study_minutes || 0), 120);
+  // Calculate total weekly study minutes strictly using valid numeric values
+  let totalStudyMinutes = 0;
+  if (progress && typeof progress.actual_studied_minutes === 'number' && !isNaN(progress.actual_studied_minutes)) {
+    totalStudyMinutes = progress.actual_studied_minutes;
+  } else if (progress && typeof progress.total_study_minutes_week === 'number' && !isNaN(progress.total_study_minutes_week)) {
+    totalStudyMinutes = progress.total_study_minutes_week;
+  } else if (days.length > 0) {
+    totalStudyMinutes = days.reduce((sum, d) => {
+      const mins = Number(d.study_minutes);
+      return sum + (!isNaN(mins) && mins > 0 ? mins : 0);
+    }, 0);
+  }
+  if (isNaN(totalStudyMinutes) || totalStudyMinutes < 0) totalStudyMinutes = 0;
+
+  // Safe Total Hours calculation (rounded to 1 decimal place, e.g., 0, 1.5, 4)
+  const totalHours = Math.round((totalStudyMinutes / 60) * 10) / 10;
+  const displayTotalHours = isNaN(totalHours) || totalHours < 0 ? 0 : totalHours;
+
+  // Safe Completed Tasks calculation
+  let totalTasksCompleted = 0;
+  if (progress && typeof progress.total_tasks_completed_this_week === 'number' && !isNaN(progress.total_tasks_completed_this_week)) {
+    totalTasksCompleted = progress.total_tasks_completed_this_week;
+  } else if (progress && typeof progress.total_tasks_completed_week === 'number' && !isNaN(progress.total_tasks_completed_week)) {
+    totalTasksCompleted = progress.total_tasks_completed_week;
+  } else {
+    totalTasksCompleted = days.reduce((sum, d) => {
+      const c = Number(d.completed_tasks_count ?? d.completed_tasks ?? 0);
+      return sum + (!isNaN(c) && c > 0 ? c : 0);
+    }, 0);
+  }
+  if (isNaN(totalTasksCompleted) || totalTasksCompleted < 0) totalTasksCompleted = 0;
+
+  // Determine if any study activity actually occurred this week
+  const hasStudyActivity = totalStudyMinutes > 0 || days.some(d => (Number(d.study_minutes) || 0) > 0);
+
+  // Maximum minutes for proportional bar heights (minimum 120 mins ceiling for visual balance)
+  const maxMinutes = Math.max(...days.map(d => Number(d.study_minutes) || 0), 120);
 
   let html = `
-    <div style="margin-bottom: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
-      <span style="color: #64748b; font-weight: 600;">Total: <strong style="color: #0f172a;">${Math.round(progress.total_study_minutes_week / 60 * 10) / 10} Hours</strong></span>
-      <span style="color: #059669; font-weight: 700; background: #ecfdf5; padding: 0.2rem 0.55rem; border-radius: 999px;">✅ ${progress.total_tasks_completed_week} completed</span>
+    <div class="velocity-header-strip">
+      <div class="velocity-total-box">
+        <span class="velocity-total-label">Total:</span>
+        <strong class="velocity-total-value">${displayTotalHours} Hours</strong>
+      </div>
+      <span class="velocity-completed-badge">
+        ✅ ${totalTasksCompleted} completed
+      </span>
     </div>
-    <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 110px; padding: 0.5rem 0; border-bottom: 1.5px solid #e2e8f0;">
+
+    <div class="velocity-bars-container" role="region" aria-label="7-Day Weekly Study Velocity Chart">
   `;
 
-  progress.days.forEach(day => {
-    const heightPct = Math.round(((day.study_minutes || 0) / maxMinutes) * 100);
-    const isToday = new Date(day.date).toDateString() === new Date().toDateString();
+  days.forEach((day, idx) => {
+    // Ensure clean weekday name without undefined
+    const rawName = day.day_of_week || day.day || defaultWeekdays[idx] || `Day ${idx + 1}`;
+    const weekdayName = rawName.length > 3 ? rawName.slice(0, 3) : rawName;
+
+    // Safe duration value
+    const rawMins = Number(day.study_minutes);
+    const studyMins = !isNaN(rawMins) && rawMins > 0 ? rawMins : 0;
+    const dayHours = Math.round((studyMins / 60) * 10) / 10;
+    const dayCompletedTasks = Number(day.completed_tasks_count ?? day.completed_tasks ?? 0) || 0;
+
+    // Height percentage
+    const heightPct = studyMins > 0 ? Math.min(100, Math.max(12, Math.round((studyMins / maxMinutes) * 100))) : 8;
+
+    // Is today
+    let isToday = false;
+    if (day.date) {
+      isToday = new Date(day.date).toDateString() === new Date().toDateString();
+    } else {
+      isToday = weekdayName.toLowerCase() === new Date().toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+    }
+
+    // Bar state styling
+    const isGoalReached = Boolean(day.goal_reached || (studyMins >= 120 && studyMins > 0));
+    let barClass = 'velocity-bar';
+    if (isGoalReached) barClass += ' bar-goal-reached';
+    else if (isToday && studyMins > 0) barClass += ' bar-today';
+    else if (studyMins > 0) barClass += ' bar-active';
+    else if (isToday) barClass += ' bar-today-empty';
+    else barClass += ' bar-empty';
+
+    const durationDisplay = studyMins >= 60 ? `${dayHours}h` : studyMins > 0 ? `${studyMins}m` : '0h';
+    const tooltipText = `${weekdayName} (${day.date || 'This Week'}): ${studyMins > 0 ? `${dayHours} hrs (${studyMins} mins)` : '0 hrs'} studied • ${dayCompletedTasks} task(s) done`;
 
     html += `
-      <div style="display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; justify-content: flex-end;">
-        <div 
-          style="width: 22px; height: ${Math.max(heightPct, 8)}%; background: ${day.goal_reached ? '#059669' : isToday ? '#4f46e5' : '#cbd5e1'}; border-radius: 6px 6px 0 0; transition: all 0.3s ease;"
-          title="${day.day} (${day.date}): ${day.study_minutes} mins studied, ${day.completed_tasks} tasks done"
-        ></div>
-        <span style="font-size: 0.725rem; font-weight: ${isToday ? '800' : '600'}; color: ${isToday ? '#4f46e5' : '#64748b'}; margin-top: 0.4rem;">
-          ${day.day}
+      <div class="velocity-bar-col ${isToday ? 'is-today-col' : ''}" title="${tooltipText}" tabIndex="0">
+        <span class="velocity-duration-label">${durationDisplay}</span>
+        <div class="velocity-bar-track">
+          <div class="${barClass}" style="height: ${heightPct}%;"></div>
+        </div>
+        <span class="velocity-day-name ${isToday ? 'is-today-text' : ''}">
+          ${weekdayName}
         </span>
       </div>
     `;
   });
 
   html += '</div>';
+
+  // Helpful empty-state messaging when no study data exists yet
+  if (!hasStudyActivity) {
+    html += `
+      <div class="velocity-empty-notice">
+        <span class="empty-notice-icon">⏱️</span>
+        <span>No study sessions logged yet this week. Start a 25-minute Pomodoro focus session to boost your velocity!</span>
+      </div>
+    `;
+  }
+
   container.innerHTML = html;
 }
 
@@ -561,49 +659,75 @@ function togglePomodoroTimer() {
   const statusEl = document.getElementById('pomodoro-status');
 
   if (isPomodoroRunning) {
-    // Pause
-    clearInterval(pomodoroInterval);
+    // Pause timer
+    if (pomodoroInterval) {
+      clearInterval(pomodoroInterval);
+      pomodoroInterval = null;
+    }
     isPomodoroRunning = false;
     if (btn) btn.innerHTML = '▶ Resume Focus';
-    if (statusEl) statusEl.textContent = 'Paused';
+    if (statusEl) statusEl.textContent = 'Ready to Study';
   } else {
-    // Start
+    // Start countdown - ALWAYS clear any existing interval first to prevent multiple timers!
+    if (pomodoroInterval) {
+      clearInterval(pomodoroInterval);
+      pomodoroInterval = null;
+    }
+
+    // If timer was completed at 00:00, reset to 25:00 before starting
+    if (pomodoroSecondsLeft <= 0) {
+      pomodoroSecondsLeft = POMODORO_DURATION_SECONDS;
+      updatePomodoroDisplay();
+    }
+
     isPomodoroRunning = true;
     if (btn) btn.innerHTML = '⏸ Pause Focus';
-    if (statusEl) statusEl.textContent = 'Focusing... Stay disciplined! 🔥';
+    if (statusEl) statusEl.textContent = 'Studying';
 
     pomodoroInterval = setInterval(() => {
       if (pomodoroSecondsLeft > 0) {
         pomodoroSecondsLeft--;
         updatePomodoroDisplay();
-      } else {
-        clearInterval(pomodoroInterval);
+      }
+
+      if (pomodoroSecondsLeft <= 0) {
+        // Complete session
+        if (pomodoroInterval) {
+          clearInterval(pomodoroInterval);
+          pomodoroInterval = null;
+        }
         isPomodoroRunning = false;
-        if (btn) btn.innerHTML = '▶ Start Focus (25m)';
-        if (statusEl) statusEl.textContent = 'Session Completed! 🎉';
-        showToast('Pomodoro focus session completed! Great job! 🎉', 'success');
-        pomodoroSecondsLeft = 25 * 60;
+        pomodoroSecondsLeft = 0;
         updatePomodoroDisplay();
+
+        if (btn) btn.innerHTML = '▶ Start Focus (25m)';
+        if (statusEl) statusEl.textContent = 'Session Completed';
+        showToast('Pomodoro focus session completed! Great job! 🎉', 'success');
 
         // Automatically log study session to API (25 mins)
         api.analytics.logStudySession({
           duration_minutes: 25,
           notes: 'Completed 25-minute Pomodoro focus block.'
-        }).then(() => loadDashboardOverview());
+        }).then(() => loadDashboardOverview()).catch(err => {
+          console.error('Failed to auto-log study session:', err);
+        });
       }
     }, 1000);
   }
 }
 
 function resetPomodoroTimer() {
-  clearInterval(pomodoroInterval);
+  if (pomodoroInterval) {
+    clearInterval(pomodoroInterval);
+    pomodoroInterval = null;
+  }
   isPomodoroRunning = false;
-  pomodoroSecondsLeft = 25 * 60;
+  pomodoroSecondsLeft = POMODORO_DURATION_SECONDS;
   updatePomodoroDisplay();
   const btn = document.getElementById('timer-start-btn');
   if (btn) btn.innerHTML = '▶ Start Focus (25m)';
   const statusEl = document.getElementById('pomodoro-status');
-  if (statusEl) statusEl.textContent = 'Ready to study';
+  if (statusEl) statusEl.textContent = 'Ready to Study';
 }
 
 function updatePomodoroDisplay() {
@@ -618,7 +742,7 @@ function startFocusOnTask(taskTitle) {
   resetPomodoroTimer();
   togglePomodoroTimer();
   const statusEl = document.getElementById('pomodoro-status');
-  if (statusEl) statusEl.textContent = `Focusing on: ${taskTitle}`;
+  if (statusEl) statusEl.textContent = 'Studying';
   showToast(`Focus timer started for "${taskTitle}"! ⏱️`, 'info');
 }
 

@@ -208,7 +208,7 @@ def get_dashboard_overview(
                 pass
     upcoming_tasks.sort(key=lambda t: t.due_date or "")
 
-    # Weekly Progress Widget (last 7 days of actual data)
+    # Weekly Progress Widget (Monday to Sunday current week)
     days_progress = []
     total_week_study_min = 0
     total_tasks_completed_week = 0
@@ -217,13 +217,16 @@ def get_dashboard_overview(
     best_day_name = None
     best_day_minutes = 0
 
+    # Start from Monday of the current week
+    start_of_week = today_date - timedelta(days=today_date.weekday())
+
     study_sessions = db.query(StudySession).filter(
         StudySession.user_id == current_user.id,
-        StudySession.started_at >= today - timedelta(days=7)
+        StudySession.started_at >= datetime.combine(start_of_week, datetime.min.time())
     ).all()
 
-    for i in range(6, -1, -1):
-        d_date = today_date - timedelta(days=i)
+    for i in range(7):
+        d_date = start_of_week + timedelta(days=i)
         d_str = d_date.strftime("%Y-%m-%d")
         day_abbr = d_date.strftime("%a")
 
@@ -245,7 +248,9 @@ def get_dashboard_overview(
         days_progress.append(DayProgress(
             date=d_str,
             day_of_week=day_abbr,
+            day=day_abbr,
             completed_tasks_count=day_completed,
+            completed_tasks=day_completed,
             study_minutes=day_study_min,
             goal_reached=goal_reached
         ))
@@ -258,8 +263,10 @@ def get_dashboard_overview(
         days=days_progress,
         weekly_goal_minutes=weekly_goal_min,
         actual_studied_minutes=total_week_study_min,
+        total_study_minutes_week=total_week_study_min,
         goal_completion_percentage=min(goal_pct, 100),
         total_tasks_completed_this_week=total_tasks_completed_week,
+        total_tasks_completed_week=total_tasks_completed_week,
         daily_average_minutes=daily_avg_min,
         best_day_name=best_day_name or "None",
         best_day_minutes=best_day_minutes,
@@ -433,7 +440,7 @@ def get_analytics_overview(
     week_sessions = [s for s in sessions if s.started_at and s.started_at >= today - timedelta(days=7)]
     weekly_study_minutes = sum(s.duration_minutes for s in week_sessions)
 
-    # 7-Day Velocity Calculation
+    # Current calendar week (Monday to Sunday) Velocity Calculation
     daily_goal_min = current_user.daily_study_goal_minutes or 120
     days_progress = []
     total_week_study_min = 0
@@ -442,15 +449,18 @@ def get_analytics_overview(
     best_day_name = None
     best_day_minutes = 0
 
-    for i in range(6, -1, -1):
-        d_date = today_date - timedelta(days=i)
+    start_of_week = today_date - timedelta(days=today_date.weekday())
+    curr_week_sessions = [s for s in sessions if s.started_at and s.started_at.date() >= start_of_week]
+
+    for i in range(7):
+        d_date = start_of_week + timedelta(days=i)
         d_str = d_date.strftime("%Y-%m-%d")
         day_abbr = d_date.strftime("%a")
 
         day_completed = sum(1 for t in user_tasks if t.completed_at and t.completed_at.date() == d_date)
         total_tasks_completed_week += day_completed
 
-        day_study_min = sum(s.duration_minutes for s in week_sessions if s.started_at and s.started_at.date() == d_date)
+        day_study_min = sum(s.duration_minutes for s in curr_week_sessions if s.started_at and s.started_at.date() == d_date)
         total_week_study_min += day_study_min
 
         goal_reached = day_study_min >= daily_goal_min and day_study_min > 0
@@ -463,7 +473,9 @@ def get_analytics_overview(
         days_progress.append(DayProgress(
             date=d_str,
             day_of_week=day_abbr,
+            day=day_abbr,
             completed_tasks_count=day_completed,
+            completed_tasks=day_completed,
             study_minutes=day_study_min,
             goal_reached=goal_reached
         ))
@@ -476,8 +488,10 @@ def get_analytics_overview(
         days=days_progress,
         weekly_goal_minutes=weekly_goal_min,
         actual_studied_minutes=total_week_study_min,
+        total_study_minutes_week=total_week_study_min,
         goal_completion_percentage=min(goal_pct, 100),
         total_tasks_completed_this_week=total_tasks_completed_week,
+        total_tasks_completed_week=total_tasks_completed_week,
         daily_average_minutes=daily_avg_min,
         best_day_name=best_day_name or "None",
         best_day_minutes=best_day_minutes,

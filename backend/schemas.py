@@ -387,7 +387,9 @@ class ContinueLearningWidget(BaseModel):
 class DayProgress(BaseModel):
     date: str
     day_of_week: str
+    day: Optional[str] = None
     completed_tasks_count: int = 0
+    completed_tasks: Optional[int] = None
     study_minutes: int = 0
     goal_reached: bool = False
 
@@ -396,8 +398,10 @@ class WeeklyProgressWidget(BaseModel):
     days: List[DayProgress] = []
     weekly_goal_minutes: int = 0
     actual_studied_minutes: int = 0
+    total_study_minutes_week: Optional[int] = None
     goal_completion_percentage: int = 0
     total_tasks_completed_this_week: int = 0
+    total_tasks_completed_week: Optional[int] = None
     daily_average_minutes: int = 0
     best_day_name: Optional[str] = None
     best_day_minutes: int = 0

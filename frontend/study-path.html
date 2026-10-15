@@ -15,14 +15,13 @@
   <div class="app-container">
     
     <!-- Sidebar Navigation -->
-    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+    <aside class="app-sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">⚡</div>
         <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
       </div>
 
-      <nav class="sidebar-menu" aria-label="Main Navigation">
-        <div class="menu-label">Main Navigation</div>
+      <nav class="sidebar-menu">
         
         <a href="dashboard.html" class="nav-item" id="sidebar-nav-dashboard" style="text-decoration: none;">
           <div class="nav-item-left">
@@ -100,26 +99,33 @@
           </div>
         </div>
 
-        <div class="nav-right" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-          <select id="roadmap-track-switcher" class="form-control" onchange="handleRoadmapTrackSwitch(this.value)" style="height: 38px; padding: 0.2rem 0.6rem; font-size: 0.82rem; font-weight: 700; border: 1.5px solid #c7d2fe; border-radius: 8px; background: #ffffff; cursor: pointer; color: #1e1b4b;" title="Switch curriculum track">
-            <option value="FULL_STACK">💻 Full Stack Web Dev</option>
-            <option value="SSC">🏛️ SSC CGL & CHSL</option>
-            <option value="RAILWAY">🚆 Railway (RRB NTPC)</option>
-            <option value="JEE">📐 IIT JEE Main & Adv</option>
-            <option value="NEET">🩺 NEET Medical UG</option>
-          </select>
-          <button class="btn btn-primary" onclick="openAddTopicModal()" id="add-custom-topic-btn">
-            <span>+</span>
+        <div class="nav-right roadmap-header-controls">
+          <div class="roadmap-track-selector-box" title="Switch your active study curriculum">
+            <span class="track-selector-icon">🎯</span>
+            <span class="track-selector-label">Track:</span>
+            <select id="roadmap-track-switcher" class="roadmap-track-dropdown" onchange="handleRoadmapTrackSwitch(this.value)">
+              <option value="FULL_STACK">💻 Full Stack Web Dev</option>
+              <option value="SSC">🏛️ SSC CGL & CHSL</option>
+              <option value="RAILWAY">🚆 Railway (RRB NTPC)</option>
+              <option value="JEE">📐 IIT JEE Main & Adv</option>
+              <option value="NEET">🩺 NEET Medical UG</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary roadmap-header-btn" onclick="openAddTopicModal()" id="add-custom-topic-btn" title="Add a custom topic to this curriculum">
+            <span style="font-size: 1rem; font-weight: 800; line-height: 1;">+</span>
             <span>Add Custom Topic</span>
           </button>
-          <a href="profile.html" class="btn btn-secondary btn-sm" title="Change Track">
-            ⚙️ Track Settings
+
+          <a href="profile.html" class="btn btn-secondary roadmap-header-btn" title="View Track Details & Settings">
+            <span>⚙️</span>
+            <span>Track Settings</span>
           </a>
         </div>
       </header>
 
       <!-- Main Roadmap Content -->
-      <main class="dashboard-content" style="max-width: 1120px; margin: 0 auto; width: 100%;">
+      <main class="dashboard-content" style="width: 100%; max-width: 100%; margin: 0; min-width: 0; box-sizing: border-box;">
         
         <!-- Track Hero & Progress Overview Card -->
         <div class="roadmap-hero-card" id="roadmap-hero">

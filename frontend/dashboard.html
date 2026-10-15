@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — TaskFlow Study Platform</title>
-  <meta name="description" content="Personalized student study path dashboard with daily plans, roadmap progress, and task management.">
+  <meta name="description"
+    content="Personalized student study path dashboard with daily plans, roadmap progress, and task management.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
+
 <body>
 
   <div class="app-container">
-    
+
     <!-- Sidebar Navigation -->
-    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+    <aside class="app-sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">⚡</div>
         <span class="brand-logo" style="font-size: 1.3rem;">Task<span class="gradient-text">Flow</span></span>
       </div>
 
-
-      <nav class="sidebar-menu" aria-label="Main Navigation">
-        <div class="menu-label">Main Navigation</div>
-        
+      <nav class="sidebar-menu">
         <a href="dashboard.html" class="nav-item active" id="sidebar-nav-dashboard" style="text-decoration: none;">
           <div class="nav-item-left">
             <span>📊</span>
@@ -80,10 +80,12 @@
         </a>
 
         <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
-          <a href="profile.html" class="btn btn-secondary btn-sm" style="flex: 1; justify-content: center; text-decoration: none;">
+          <a href="profile.html" class="btn btn-secondary btn-sm"
+            style="flex: 1; justify-content: center; text-decoration: none;">
             Profile
           </a>
-          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="flex: 1; justify-content: center;" id="logout-btn" title="Sign Out">
+          <button onclick="Auth.logout()" class="btn btn-danger btn-sm" style="flex: 1; justify-content: center;"
+            id="logout-btn" title="Sign Out">
             Logout
           </button>
         </div>
@@ -92,11 +94,12 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      
+
       <!-- Top Navbar -->
       <header class="top-navbar">
         <div class="nav-left">
-          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Navigation Menu">
+          <button class="btn btn-secondary btn-icon mobile-toggle" id="mobile-sidebar-toggle"
+            aria-label="Toggle Navigation Menu">
             ☰
           </button>
           <div class="greeting-text">
@@ -110,8 +113,10 @@
         <div class="nav-right">
           <!-- Quick Search -->
           <div class="nav-search-box" style="position: relative;">
-            <input type="text" id="top-search-input" placeholder="Search tasks or topics..." class="form-control" style="padding-left: 2rem; width: 220px; font-size: 0.85rem; height: 38px;">
-            <span style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;">🔍</span>
+            <input type="text" id="top-search-input" placeholder="Search tasks or topics..." class="form-control"
+              style="padding-left: 2rem; width: 220px; font-size: 0.85rem; height: 38px;">
+            <span
+              style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;">🔍</span>
           </div>
 
           <!-- Quick Action Buttons -->
@@ -128,24 +133,27 @@
       </header>
 
       <!-- Main Dashboard Content -->
-      <main class="dashboard-content" style="max-width: 1220px; margin: 0 auto; width: 100%;">
-        
+      <main class="dashboard-content" id="dashboard-content-main">
+
         <!-- SECTION 1: Welcome Hero Banner -->
         <section class="welcome-hero-card" id="welcome-section">
           <div class="welcome-hero-left">
             <span class="track-hero-icon" id="hero-track-icon">🎓</span>
-            <div>
-              <h2 id="hero-welcome-title" style="margin: 0; font-size: 1.5rem; font-weight: 800; color: #0f172a;">Welcome back, Student!</h2>
+            <div style="min-width: 0; flex: 1;">
+              <h2 id="hero-welcome-title" style="margin: 0; font-size: 1.45rem; font-weight: 800; color: #0f172a; word-break: break-word;">
+                Welcome back, Student!</h2>
             </div>
           </div>
 
           <div class="welcome-hero-right">
             <div class="track-quick-switcher" title="Switch your study path instantly">
-              <label for="track-switcher-select" style="font-size: 0.75rem; font-weight: 700; color: #475569; display: flex; align-items: center; gap: 0.25rem;">
+              <label for="track-switcher-select"
+                style="font-size: 0.75rem; font-weight: 700; color: #475569; display: flex; align-items: center; gap: 0.25rem;">
                 <span>🎯</span>
                 <span>Track:</span>
               </label>
-              <select id="track-switcher-select" class="form-control" onchange="switchStudyTrack(this.value)" style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.82rem; font-weight: 700; border: 1.5px solid #c7d2fe; border-radius: 8px; background: #ffffff; cursor: pointer; color: #1e1b4b;">
+              <select id="track-switcher-select" class="form-control" onchange="switchStudyTrack(this.value)"
+                style="height: 36px; padding: 0.2rem 0.5rem; font-size: 0.82rem; font-weight: 700; border: 1.5px solid #c7d2fe; border-radius: 8px; background: #ffffff; cursor: pointer; color: #1e1b4b;">
                 <option value="FULL_STACK">💻 Full Stack Web Dev</option>
                 <option value="SSC">🏛️ SSC CGL & CHSL</option>
                 <option value="RAILWAY">🚆 Railway (RRB NTPC)</option>
@@ -161,7 +169,8 @@
               <span class="goal-lbl">Target Exam / Goal:</span>
               <strong class="goal-val" id="hero-deadline-val">Set in Profile</strong>
             </div>
-            <a href="study-path.html" class="btn btn-primary btn-sm" style="padding: 0.75rem 1rem; text-decoration: none;" title="Open Study Roadmap">
+            <a href="study-path.html" class="btn btn-primary btn-sm"
+              style="padding: 0.75rem 1rem; text-decoration: none;" title="Open Study Roadmap">
               🗺️ Roadmap →
             </a>
           </div>
@@ -209,25 +218,29 @@
         </section>
 
         <!-- Dynamic Overdue Alert Banner (Shown only if overdue tasks > 0) -->
-        <div id="overdue-alert-banner" style="display: none; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; align-items: center; justify-content: space-between; gap: 1rem;">
+        <div id="overdue-alert-banner"
+          style="display: none; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; align-items: center; justify-content: space-between; gap: 1rem;">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
             <span style="font-size: 1.3rem;">⚠️</span>
             <div>
-              <strong style="color: #9f1239; font-size: 0.9rem;">You have <span id="overdue-count-badge">0</span> overdue task(s)!</strong>
-              <p style="margin: 0; font-size: 0.78rem; color: #be123c;">These were scheduled for earlier dates. Keep your study streak alive!</p>
+              <strong style="color: #9f1239; font-size: 0.9rem;">You have <span id="overdue-count-badge">0</span>
+                overdue task(s)!</strong>
+              <p style="margin: 0; font-size: 0.78rem; color: #be123c;">These were scheduled for earlier dates. Keep
+                your study streak alive!</p>
             </div>
           </div>
-          <a href="tasks.html" class="btn btn-danger btn-sm" style="text-decoration: none; font-weight: 700; white-space: nowrap;">
+          <a href="tasks.html" class="btn btn-danger btn-sm"
+            style="text-decoration: none; font-weight: 700; white-space: nowrap;">
             Review Tasks →
           </a>
         </div>
 
         <!-- SECTION 3: Structured 2-Column Dashboard Grid -->
         <div class="dashboard-main-grid">
-          
+
           <!-- LEFT COLUMN: Today's Study Plan & Upcoming Deadlines -->
           <div class="dash-col-left">
-            
+
             <!-- Panel 1: Today's Study Action Plan -->
             <div class="content-panel-card" id="today-plan-panel">
               <div class="panel-header" style="flex-wrap: wrap; gap: 0.75rem;">
@@ -235,7 +248,8 @@
                   <span>📅</span>
                   <div>
                     <h3 style="margin: 0; font-size: 1.15rem;">Today's Action Plan</h3>
-                    <p style="margin: 0.15rem 0 0 0; font-size: 0.78rem; color: #64748b;">Daily focus schedule & task completion</p>
+                    <p style="margin: 0.15rem 0 0 0; font-size: 0.78rem; color: #64748b;">Daily focus schedule & task
+                      completion</p>
                   </div>
                 </div>
                 <div style="display: flex; gap: 0.45rem; align-items: center; flex-wrap: wrap;">
@@ -247,13 +261,15 @@
 
               <!-- Task Filter Tabs -->
               <div class="task-tabs-row" role="tablist">
-                <button type="button" class="task-tab-btn active" id="tab-today" onclick="switchTaskTab('today')" role="tab">
+                <button type="button" class="task-tab-btn active" id="tab-today" onclick="switchTaskTab('today')"
+                  role="tab">
                   📅 Today's Plan (<span id="count-tab-today">0</span>)
                 </button>
                 <button type="button" class="task-tab-btn" id="tab-all" onclick="switchTaskTab('all')" role="tab">
                   📋 All Active (<span id="count-tab-all">0</span>)
                 </button>
-                <button type="button" class="task-tab-btn" id="tab-completed" onclick="switchTaskTab('completed')" role="tab">
+                <button type="button" class="task-tab-btn" id="tab-completed" onclick="switchTaskTab('completed')"
+                  role="tab">
                   ✅ Completed (<span id="count-tab-completed">0</span>)
                 </button>
               </div>
@@ -285,7 +301,7 @@
 
           <!-- RIGHT COLUMN: Active Syllabus, Pomodoro Timer & Velocity -->
           <div class="dash-col-right">
-            
+
             <!-- Panel 3: Active Study Path & Syllabus Roadmap -->
             <div class="content-panel-card continue-learning-card" id="continue-learning-panel">
               <div class="panel-header">
@@ -293,7 +309,8 @@
                   <span>🗺️</span>
                   <div>
                     <h3 style="margin: 0; font-size: 1.15rem;">Active Syllabus & Roadmap</h3>
-                    <p style="margin: 0.15rem 0 0 0; font-size: 0.78rem; color: #64748b;">Curriculum progress & next milestones</p>
+                    <p style="margin: 0.15rem 0 0 0; font-size: 0.78rem; color: #64748b;">Curriculum progress & next
+                      milestones</p>
                   </div>
                 </div>
                 <a href="study-path.html" class="panel-link">Full Curriculum →</a>
@@ -305,26 +322,28 @@
             </div>
 
             <!-- Panel 4: Pomodoro Focus Session Timer -->
-            <div class="content-panel-card timer-widget-card">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                <span style="font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem;">
+            <div class="content-panel-card timer-widget-card" id="study-focus-panel">
+              <div class="timer-header">
+                <span class="timer-title">
                   <span>⏱️</span> Study Focus Session
                 </span>
-                <span class="badge" style="background: rgba(255,255,255,0.2); color: #ffffff; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 999px;">
+                <span class="badge timer-badge">
                   Pomodoro 25m
                 </span>
               </div>
 
               <div class="timer-display-box">
                 <div id="pomodoro-timer-display" class="timer-digits">25:00</div>
-                <p id="pomodoro-status" class="timer-status-text">Ready to study</p>
+                <p id="pomodoro-status" class="timer-status-text">Ready to Study</p>
               </div>
 
               <div class="timer-actions">
-                <button class="btn-timer-primary" id="timer-start-btn" onclick="togglePomodoroTimer()">
+                <button class="btn-timer-primary" id="timer-start-btn" onclick="togglePomodoroTimer()"
+                  aria-label="Start Focus Session">
                   ▶ Start Focus (25m)
                 </button>
-                <button class="btn-timer-secondary" onclick="resetPomodoroTimer()">
+                <button class="btn-timer-secondary" id="timer-reset-btn" onclick="resetPomodoroTimer()"
+                  aria-label="Reset Pomodoro Timer">
                   🔄 Reset
                 </button>
               </div>
@@ -364,38 +383,21 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="task-title" class="form-label">Task Title *</label>
-            <input 
-              type="text" 
-              id="task-title" 
-              class="form-control no-icon" 
-              placeholder="e.g. Master Flexbox Layouts / Quantitative Arithmetic Practice" 
-              required
-              maxlength="200"
-            >
+            <input type="text" id="task-title" class="form-control no-icon"
+              placeholder="e.g. Master Flexbox Layouts / Quantitative Arithmetic Practice" required maxlength="200">
           </div>
 
           <div class="form-group">
             <label for="task-desc" class="form-label">Description / Notes</label>
-            <textarea 
-              id="task-desc" 
-              class="form-control no-icon" 
-              rows="3" 
-              placeholder="Provide topics, chapters, formula notes, or key concepts..."
-              maxlength="2000"
-            ></textarea>
+            <textarea id="task-desc" class="form-control no-icon" rows="3"
+              placeholder="Provide topics, chapters, formula notes, or key concepts..." maxlength="2000"></textarea>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div class="form-group">
               <label for="task-category" class="form-label">Subject / Module *</label>
-              <input 
-                type="text" 
-                id="task-category" 
-                class="form-control no-icon" 
-                placeholder="e.g. Physics / Frontend / Aptitude"
-                required
-                maxlength="50"
-              >
+              <input type="text" id="task-category" class="form-control no-icon"
+                placeholder="e.g. Physics / Frontend / Aptitude" required maxlength="50">
             </div>
 
             <div class="form-group">
@@ -411,34 +413,19 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div class="form-group">
               <label for="task-due-date" class="form-label">Due Date</label>
-              <input 
-                type="date" 
-                id="task-due-date" 
-                class="form-control no-icon"
-              >
+              <input type="date" id="task-due-date" class="form-control no-icon">
             </div>
 
             <div class="form-group">
               <label for="task-planned-date" class="form-label">Study Plan Date</label>
-              <input 
-                type="date" 
-                id="task-planned-date" 
-                class="form-control no-icon"
-              >
+              <input type="date" id="task-planned-date" class="form-control no-icon">
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div class="form-group">
               <label for="task-est-minutes" class="form-label">Estimated Duration (Minutes)</label>
-              <input 
-                type="number" 
-                id="task-est-minutes" 
-                class="form-control no-icon" 
-                value="60" 
-                min="15" 
-                max="600"
-              >
+              <input type="number" id="task-est-minutes" class="form-control no-icon" value="60" min="15" max="600">
             </div>
 
             <div class="form-group">
@@ -466,4 +453,5 @@
   <script src="js/auth.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
+
 </html>
